@@ -1,0 +1,368 @@
+/*
+  assets/css/style.css
+  All styling for the portfolio. Hybrid aesthetic: hand-drawn chrome (frames, buttons,
+  underlines, annotations) over clean, readable content (sans body text, mono code).
+  The CSS borders here are also the no-JS fallback — sketch.js makes them transparent
+  once it has drawn real ink over the top, so nothing ever renders unbordered.
+*/
+
+/* ============================================================
+   1. Tokens
+   ============================================================ */
+:root {
+  --paper:        #f7f4ec;
+  --paper-card:   #fffdf8;
+  --ink:          #1c1b18;
+  --ink-soft:     #56514a;   /* 7:1 on paper — passes AA and AAA for body text */
+  --rule:         #b8b1a4;
+  --accent:       #e2552a;   /* marker orange — display + decoration only */
+  --accent-deep:  #c2431d;   /* darkened for text-bearing surfaces, keeps AA */
+  --accent-2:     #2d6e8e;   /* ballpoint blue */
+  --highlight:    #ffe27a;
+  --grid:         rgba(28, 27, 24, 0.05);
+
+  --font-display: 'Architects Daughter', cursive;
+  --font-body:    'Karla', system-ui, sans-serif;
+  --font-note:    'Caveat', cursive;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --wrap: 1080px;
+  --gap: 28px;
+}
+
+/* ============================================================
+   2. Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  /* Faint graph ruling — sells "notebook" without shipping a texture image. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 17.5px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paper grain. feTurbulence keeps it zero-request and resolution independent. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.16;
+  color: var(--ink);
+  margin: 0 0 0.45em;
+}
+h1 { font-size: clamp(2.7rem, 7.5vw, 4.6rem); letter-spacing: -0.015em; }
+h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h3 { font-size: 1.35rem; }
+p  { margin: 0 0 1.05em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--accent-deep); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: rgba(28, 27, 24, 0.06);
+  padding: 0.12em 0.4em;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+/* Marker highlight — angled gradient so it reads as swiped, not filled. */
+mark {
+  background: linear-gradient(100deg, transparent 1%, var(--highlight) 2%, var(--highlight) 96%, transparent 99%);
+  padding: 0 3px;
+  color: inherit;
+}
+
+:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+
+/* Horizontal longhand only — the padding shorthand here would out-specify `section`
+   below and flatten the vertical rhythm on every `<section class="wrap">`. */
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+/* Clears the sticky header when an anchor link jumps here — without it the heading
+   lands underneath the bar. */
+section { padding-top: 76px; padding-bottom: 76px; scroll-margin-top: 84px; }
+.section-head { margin-bottom: 34px; }
+.section-head p { max-width: 54ch; margin-top: -0.2em; }
+
+/* Skip link — keyboard users shouldn't tab through the nav on every page load. */
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 18px; z-index: 999;
+}
+.skip:focus { left: 12px; top: 12px; }
+
+/* ============================================================
+   3. Sketch overlay plumbing
+   ============================================================ */
+[data-sketch] { position: relative; }
+
+[data-sketch] > svg.sketch {
+  position: absolute;
+  inset: -12px;
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+  pointer-events: none;
+  overflow: visible;
+}
+/* Content must be lifted above the overlay. Bare text nodes can't be, which is why
+   filled elements (buttons) wrap their label in a <span> — see .btn in the markup. */
+[data-sketch] > *:not(svg.sketch) { position: relative; z-index: 1; }
+
+/* Fallback border: paints instantly and survives JS failure. Once sketch.js draws real
+   ink it sets [data-drawn] and we hide this by colour only — never by width, which
+   would change the content box and reflow the page. */
+[data-sketch]:not([data-sketch="underline"]):not([data-sketch="vline"]):not([data-sketch="dot"]) {
+  border: 2.4px solid var(--ink);
+  border-radius: 200px 14px 190px 14px / 14px 190px 14px 200px;
+}
+[data-sketch][data-drawn] { border-color: transparent !important; }
+
+/* ============================================================
+   4. Header
+   ============================================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(247, 244, 236, 0.86);
+  backdrop-filter: blur(6px);
+}
+.bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 16px 0 20px; flex-wrap: wrap;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem; color: var(--ink); text-decoration: none;
+}
+.logo span { color: var(--accent); }
+
+nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+nav a {
+  position: relative;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  padding-bottom: 7px;
+}
+nav a svg.sketch {
+  inset: auto; left: -5px; bottom: -3px;
+  width: calc(100% + 10px); height: 14px;
+}
+/* Draw-on rather than fade-in — a squiggle should look like it was just drawn. */
+nav a svg.sketch path {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  transition: stroke-dashoffset 0.3s ease-out;
+}
+nav a:hover svg.sketch path,
+nav a:focus-visible svg.sketch path,
+nav a.current svg.sketch path { stroke-dashoffset: 0; }
+nav a.current { color: var(--ink); }
+
+/* ============================================================
+   5. Hero
+   ============================================================ */
+.hero { padding-top: 46px; padding-bottom: 60px; }
+.hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: start; }
+.eyebrow {
+  font-family: var(--font-note);
+  font-size: 1.45rem; color: var(--accent);
+  display: inline-block; transform: rotate(-2deg); margin-bottom: 2px;
+}
+.lede { font-size: 1.15rem; max-width: 48ch; }
+
+/* Polaroid — the clean-content rule applied to imagery: real photo, sketchy frame. */
+.polaroid {
+  background: var(--paper-card);
+  padding: 14px 14px 0;
+  transform: rotate(2deg);
+  max-width: 270px;
+  margin-left: auto;
+}
+.polaroid .shot {
+  aspect-ratio: 4 / 5;
+  background: repeating-linear-gradient(45deg, #ece7db, #ece7db 12px, #e4dece 12px, #e4dece 24px);
+  display: grid; place-items: center;
+  text-align: center; font-family: var(--font-note);
+  font-size: 1.15rem; color: #8d8577; padding: 12px;
+}
+.polaroid .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.polaroid .caption {
+  font-family: var(--font-note); font-size: 1.25rem;
+  color: var(--ink-soft); text-align: center; padding: 8px 4px 12px;
+}
+
+/* Doodled margin note with a hand-drawn arrow. */
+.note {
+  position: relative;
+  font-family: var(--font-note); font-size: 1.3rem;
+  color: var(--accent-2); transform: rotate(-3deg);
+  max-width: 230px; line-height: 1.35;
+}
+.note svg { position: absolute; overflow: visible; }
+
+/* ============================================================
+   6. Buttons
+   ============================================================ */
+.btns { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 30px; }
+.btn {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  padding: 12px 26px;
+  background: var(--paper-card);
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.btn.primary { background: var(--accent-deep); color: #fff; }
+.btn:hover { transform: translate(-2px, -2px) rotate(-0.5deg); }
+.btn:active { transform: translate(1px, 1px); }
+
+/* ============================================================
+   7. Cards / work
+   ============================================================ */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 36px; }
+.card {
+  background: var(--paper-card);
+  padding: 26px 26px 22px;
+  transition: transform 0.2s ease;
+}
+/* Uneven rotation so the grid never reads as machine-aligned. */
+.card:nth-child(3n+1) { transform: rotate(-0.7deg); }
+.card:nth-child(3n+2) { transform: rotate(0.5deg); }
+.card:nth-child(3n+3) { transform: rotate(-0.3deg); }
+.card:hover { transform: rotate(0deg) translateY(-5px); }
+.card h3 { margin-bottom: 0.3em; }
+.card p { font-size: 0.98rem; }
+.kicker {
+  font-family: var(--font-note); font-size: 1.15rem;
+  color: var(--accent-2); letter-spacing: 0.01em;
+}
+.card-links { display: flex; gap: 16px; margin-top: 14px; font-size: 0.94rem; }
+.card-links a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* Result strip — the numbers that keep a sketchy site from reading as vague. */
+.result {
+  font-family: var(--font-mono); font-size: 0.82rem;
+  color: var(--ink); background: var(--highlight);
+  display: inline-block; padding: 2px 8px; margin-top: 4px;
+}
+
+/* ============================================================
+   8. Timeline — the "progress and growth" section
+   ============================================================ */
+.timeline-wrap { position: relative; }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 52px; }
+.spine { position: absolute; left: 8px; top: 6px; width: 12px; bottom: 6px; }
+.tl-item { position: relative; margin-bottom: 42px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-dot { position: absolute; left: -52px; top: 8px; width: 15px; height: 15px; }
+.tl-year {
+  font-family: var(--font-display); font-size: 1.05rem;
+  color: var(--accent); margin-bottom: 2px;
+}
+.tl-item h3 { margin-bottom: 0.2em; }
+.tl-item p { font-size: 1rem; max-width: 60ch; }
+
+/* ============================================================
+   9. Tags
+   ============================================================ */
+.tag-group { margin-bottom: 28px; }
+.tag-group h4 {
+  font-family: var(--font-note); font-size: 1.3rem;
+  color: var(--ink-soft); margin: 0 0 12px;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 15px 16px; }
+.tag {
+  padding: 6px 16px; font-size: 0.95rem;
+  background: var(--paper-card); color: var(--ink);
+}
+.tag:nth-child(even) { transform: rotate(1deg); }
+.tag:nth-child(odd)  { transform: rotate(-0.9deg); }
+
+/* ============================================================
+   10. Contact
+   ============================================================ */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+.contact-card { background: var(--paper-card); padding: 22px 24px; }
+.contact-card .kicker { display: block; margin-bottom: 2px; }
+.contact-card a {
+  font-family: var(--font-display); font-size: 1.15rem;
+  color: var(--ink); text-decoration: none; word-break: break-word;
+}
+.contact-card a:hover { color: var(--accent-deep); }
+
+footer {
+  padding: 46px 0 70px; text-align: center;
+  font-family: var(--font-note); font-size: 1.25rem;
+}
+footer span { color: var(--accent); }
+
+/* ============================================================
+   11. Reveal
+   ============================================================ */
+/* Content fades up on scroll. Gated behind .js so a JS failure can never leave the page
+   blank — without the gate, one broken script hides every section below the fold. */
+.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ============================================================
+   12. Responsive
+   ============================================================ */
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .polaroid { margin-left: 0; }
+  section { padding: 56px 0; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16.5px; }
+  /* Nav drops to its own centred row — four links beside the logo is too cramped here. */
+  .bar { padding-bottom: 12px; gap: 10px; }
+  nav { width: 100%; }
+  nav ul { gap: 20px; justify-content: center; }
+  .timeline { padding-left: 40px; }
+  .tl-dot { left: -40px; }
+  .spine { left: 4px; }
+}
+
+/* ============================================================
+   13. Preferences
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+  /* Must match .js .reveal specificity or the fade-out rule keeps winning here. */
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+@media print {
+  body::after, header, .note svg { display: none; }
+  body { background: #fff; }
+  [data-sketch] { border-color: var(--ink) !important; }
+  svg.sketch { display: none; }
+}

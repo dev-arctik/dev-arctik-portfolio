@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Tooling output
+.playwright-mcp/
+playwright-screenshots/
+*.log
+
+# Secrets — never commit these
+.env
+.env.*
+!.env.example
+
+# Dependencies (none today, but keeps a future build step clean)
+node_modules/
