@@ -78,29 +78,32 @@
       <article class="card" data-sketch>
         <span class="kicker">2025 — 2026 · lead developer</span>
         <h3>Mediator Gabby</h3>
-        <p>AI mediation for separating parents, built for Better Parenting Plan. Each parent works through custody, holidays and travel alone with the agent in a private breakout room, and the system compares both sets of answers into a colour-coded agreement map.</p>
-        <p>The first version ran the joint session too. Professional mediators told us that was a step too far, so I rebuilt it around them — the agent does the collection and the comparison, the human runs the mediation. LangGraph over FastAPI, React front end.</p>
-        <span class="result">615 of 858 commits · lead developer</span>
+        <p>AI-assisted mediation for separating parents, live for Better Parenting Plan. A mediator registers the couple; each parent then works through their agreements alone with the agent in a private breakout room, and the system compares both sets of answers into an agree / partly / disagree map the mediator carries into the real session.</p>
+        <p>Thirteen topics across two independently scoped rooms, custody and financial, each its own LangGraph with its own checkpointed state so a couple can be scoped to either or both. Parents never self-register — the mediator is the only way in. FastAPI and MongoDB behind it, React in front, Stripe subscriptions and trials around it.</p>
+        <p>The first version ran the joint session too. Professional mediators said that overreached, so I rebuilt it around them: the agent collects and compares, the human mediates.</p>
+        <span class="result">615 of 858 commits · in production</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · my own product</span>
         <h3>Hundi</h3>
-        <p>A manual-first personal finance manager for Android. Income arrives and you split it by percentage — investments and savings are planned first, expenses get whatever is left. No bank linking, no UPI, nothing logged without you confirming it. Productised from the Notion system I ran on myself for two years.</p>
+        <p>A manual-first personal finance manager for Android, for salaried Indians who would rather not hand an app their bank credentials. Income arrives, you confirm it, and it splits by percentage into typed buckets — investments and savings planned first, expenses take what is left. Nothing is linked and nothing is auto-logged; every rupee is an entry you made on purpose.</p>
+        <p>Productised from the Notion tracker I ran on myself from 2022 to 2024 — five linked databases, three employers, every salary and category logged by hand. The discipline held, the tooling didn't, so Hundi is that same system with reminders, confirmation prompts and a monthly view. Named for the hundi: both a medieval Indian bill of exchange and a temple collection box, which is where the piggy banks come from.</p>
         <span class="result">sole author · 124 commits</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · local AI</span>
         <h3>Maya</h3>
-        <p>A voice agent that runs entirely on my own Linux home server, with nothing going to the cloud. Ollama keeps the GPU while Whisper and Piper stay on CPU so they never compete for VRAM, and the whole thing fits inside 4 GB. Every tool is read-only by design — it can describe the server, never change it.</p>
+        <p>A private voice agent living on my own Linux home server, named after the assistant in Iron Man. Ask it about the machine and it answers out loud while the terminal fills in the detail. Nothing leaves the hardware — no cloud, no subscription, nobody else holding the transcript.</p>
+        <p>The interesting part is the budget: 4 GB of VRAM. Ollama holds the GPU while Whisper and Piper run on CPU so they never compete for it. Every tool is read-only by design, so Maya can describe the server but never change it.</p>
         <span class="result">fits in 4 GB VRAM</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · open source</span>
         <h3>remotion-video-mcp</h3>
-        <p>An MCP server that hands Claude a video editor. Scaffold a Remotion project, write and reorder scenes, sync narration against word-level timestamps, capture preview frames and render the final MP4 — all of it through conversation rather than a timeline UI.</p>
+        <p>An MCP server that hands Claude a video editor. Thirteen tools cover scaffolding a Remotion project, writing and reordering scenes, syncing narration to word-level timestamps, capturing preview frames and rendering the MP4. A single <code>composition.json</code> is the source of truth and the React components are generated from it, so you describe the video and nobody touches a timeline.</p>
         <span class="result">public on GitHub</span>
         <div class="card-links">
           <a href="https://github.com/dev-arctik/remotion-video-mcp">source</a>
@@ -204,6 +207,7 @@
         <span class="tag" data-sketch>MongoDB</span>
         <span class="tag" data-sketch>Redis</span>
         <span class="tag" data-sketch>SQLite</span>
+        <span class="tag" data-sketch>Stripe</span>
       </div>
     </div>
 
@@ -222,6 +226,7 @@
       <h4>ops</h4>
       <div class="tags">
         <span class="tag" data-sketch>Docker</span>
+        <span class="tag" data-sketch>AWS</span>
         <span class="tag" data-sketch>DigitalOcean</span>
         <span class="tag" data-sketch>GitHub Actions</span>
       </div>

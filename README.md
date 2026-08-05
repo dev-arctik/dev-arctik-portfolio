@@ -43,7 +43,9 @@ To sketch a new element, add `data-sketch` and make sure any bare text inside is
 
 ## The content
 
-Copy is real, not placeholder. Work cards, timeline and toolkit were written from the actual GitHub contribution history — commit counts in the `.result` chips are verifiable via the contributors API, so keep them accurate if you edit them.
+Copy is real, not placeholder. The timeline and toolkit come from the actual GitHub contribution history — commit counts in the `.result` chips are verifiable via the contributors API, so keep them accurate if you edit them. Each work card was written from that project's own `docs/` folder rather than its README.
+
+Deliberately left out of the public copy: personal figures from the Hundi tracker docs (real income and spending totals), and the client's Stripe pricing tiers and production server address from the Mediator Gabby deployment docs. Keep it that way if you extend these cards.
 
 The four work cards are Mediator Gabby (Better Parenting Plan), Hundi, Maya and `remotion-video-mcp`. Only the last is public, so it's the only card with a source link — the rest describe the work instead. `.cards` uses `auto-fit minmax(360px, 1fr)`, tuned so four cards land as a 2×2; if you add or remove cards, check that minimum still gives the column count you want.
 
