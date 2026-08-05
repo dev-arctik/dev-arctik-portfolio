@@ -41,16 +41,19 @@ To sketch a new element, add `data-sketch` and make sure any bare text inside is
 - **`prefers-reduced-motion`** → transitions and hover redraws are disabled.
 - **Print** → overlays hidden, plain borders used.
 
-## What to change before publishing
+## The content
 
-Search the HTML for `SWAP` — every placeholder is marked. In order of importance:
+Copy is real, not placeholder. The timeline and toolkit come from the actual GitHub contribution history — commit counts in the `.result` chips are verifiable via the contributors API, so keep them accurate if you edit them. Each work card was written from that project's own `docs/` folder rather than its README.
 
-1. **`you@example.com`** in the contact section — currently a placeholder, not a real address.
-2. **The three project cards** — names, descriptions, and the yellow `.result` chips are invented. Replace with real projects and real numbers. The numbers matter most: a sketchy site with vague copy reads as hiding behind style.
-3. **The four timeline entries** — placeholder milestones. Replace with your actual progression.
-4. **Your photo** — drop it at `assets/img/me.jpg` and uncomment the `<img>` inside `.polaroid`.
-5. **`og:url`** and a 1200×630 `assets/img/og.png` for link previews.
-6. **The toolkit tags** — trim anything you wouldn't want to be asked about in an interview.
+Deliberately left out of the public copy: personal figures from the Hundi tracker docs (real income and spending totals), and the client's Stripe pricing tiers and production server address from the Mediator Gabby deployment docs. Keep it that way if you extend these cards.
+
+The four work cards are Mediator Gabby (Better Parenting Plan), Hundi, Maya and `remotion-video-mcp`. Only the last is public, so it's the only card with a source link — the rest describe the work instead. `.cards` uses `auto-fit minmax(360px, 1fr)`, tuned so four cards land as a 2×2; if you add or remove cards, check that minimum still gives the column count you want.
+
+### Still to do
+
+1. **`og:url`** — still `https://example.com`. Set it once you know the domain, and add a 1200×630 `assets/img/og.png`. Marked `SWAP`.
+2. **Outcome numbers** — the `.result` chips currently carry authorship facts (commit counts, team size). Real product outcomes — mediators onboarded, sessions run — would hit harder if you can share them.
+3. **The hero photo** is the GitHub avatar, a cartoon rather than a real photo. `.polaroid .shot img` crops it hard right to cut off leftover lettering baked into the artwork — if you swap in a real photo, drop that `object-position` override.
 
 Colours, fonts and spacing all live as CSS custom properties at the top of `style.css`.
 
@@ -61,6 +64,8 @@ Opening `index.html` directly works. For a local server:
 ```bash
 python3 -m http.server 8000
 ```
+
+**Bump `?v=` in `index.html` whenever you edit `style.css` or a JS file.** There's no build step to hash filenames, and browsers cache CSS and JS independently — without it a returning visitor can run a new stylesheet against an old script. `http.server` in particular sends no `Cache-Control` at all, so it will happily serve you a stale script for hours and make an edit look like it did nothing.
 
 ## Deploying
 

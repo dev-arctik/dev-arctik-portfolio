@@ -2,7 +2,7 @@
   index.html
   The portfolio itself — a single static page, no build step and no backend.
   Sections: hero, work, journey (progress over time), toolkit, contact.
-  Anything marked SWAP is placeholder content waiting for your real details.
+  Copy and photo are real. One placeholder remains, marked SWAP: the og:url.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<!-- ?v= is a manual cache buster. There is no build step to hash filenames, and browsers
+     cache CSS and JS independently, so a returning visitor can otherwise end up running
+     a new stylesheet against an old script. Bump this whenever either file changes. -->
+<link rel="stylesheet" href="assets/css/style.css?v=4">
 </head>
 <body>
 
@@ -46,76 +49,68 @@
   <!-- ============================ HERO ============================ -->
   <section class="hero wrap" id="top">
     <div class="hero-grid">
-      <div>
-        <span class="eyebrow">hey — I'm</span>
-        <h1>Devansh Raj</h1>
-        <p class="lede">I build <mark>AI agent-enabled software</mark> at Gradscaler, taking products from scrappy MVP to release-ready — the unglamorous plumbing that decides whether a demo becomes a product.</p>
+      <div data-anim-group data-anim-step="90">
+        <span class="eyebrow" data-anim="lift">hey — I'm</span>
+        <h1 data-anim="write">Devansh Raj</h1>
+        <p class="lede" data-anim="lift">I build <mark data-anim="swipe">AI agent products</mark> end to end at Gradscaler. I got here the long way — WordPress, then Flutter, then backends, then agents — and freelancing taught me the other half of the job: turning what a client is actually asking for into something that ships.</p>
+        <!-- Each button carries its own data-anim so they land one after the other
+             rather than as a single block — the primary first, since that's the ask. -->
         <div class="btns">
-          <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work"><span>see the work</span></a>
-          <a class="btn" data-sketch href="#contact"><span>get in touch</span></a>
+          <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work" data-anim="lift"><span>see the work</span></a>
+          <a class="btn" data-sketch href="#contact" data-anim="lift"><span>get in touch</span></a>
         </div>
       </div>
 
       <div>
-        <figure class="polaroid" data-sketch>
-          <!-- SWAP: drop a photo at assets/img/me.jpg and uncomment the img tag -->
+        <figure class="polaroid" data-sketch data-anim="tilt">
           <div class="shot">
-            <!-- <img src="assets/img/me.jpg" alt="Devansh Raj"> -->
-            your photo here
+            <img src="assets/img/me.jpg" alt="Devansh Raj">
           </div>
           <figcaption class="caption">building things that ship</figcaption>
         </figure>
-
-        <div class="note" style="margin: 26px 0 0 46px;">
-          <svg viewBox="0 0 80 64" style="left:-72px; top:-2px; width:74px; height:60px;" aria-hidden="true">
-            <path d="M 6 56 C 15 43, 24 25, 51 11" fill="none" stroke="var(--accent-2)" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M 51 11 L 36 15 M 51 11 L 49 26" fill="none" stroke="var(--accent-2)" stroke-width="2.4" stroke-linecap="round"/>
-          </svg>
-          every frame on this page is drawn by hand, in code
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ============================ WORK ============================ -->
   <section class="wrap reveal" id="work">
-    <div class="section-head">
-      <h2>Selected work</h2>
-      <p>A few things I've built end to end. Each one shipped and got used by someone who wasn't me.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Selected work</h2>
+      <p data-anim="lift">A few things I've built — client work and my own. The client repos are private, so these describe the work rather than link to it.</p>
     </div>
 
-    <div class="cards">
-      <!-- SWAP: real project -->
-      <article class="card" data-sketch>
-        <span class="kicker">2026 · agent infrastructure</span>
-        <h3>Orchestrator</h3>
-        <p>Multi-agent runtime with deterministic control flow — fan-out, verification passes, and structured output that survives bad model days.</p>
-        <span class="result">40 min review → 4 min</span>
-        <div class="card-links">
-          <a href="#">case study</a>
-          <a href="https://github.com/dev-arctik">source</a>
-        </div>
+    <div class="cards" data-anim-group data-anim-step="100">
+      <article class="card" data-sketch data-anim="rise">
+        <span class="kicker">2025 — 2026 · lead developer</span>
+        <h3>Mediator Gabby</h3>
+        <p>Separating parents each talk things through alone with the agent, in their own private room. Once both are done it lines the answers up — agreed, partly, not yet — and hands that to their mediator for the real conversation.</p>
+        <p>Live for Better Parenting Plan. The first version ran the joint session too; mediators said that was a step too far, so I rebuilt it around them. Thirteen topics, two scoped rooms, LangGraph and FastAPI underneath.</p>
+        <span class="result">615 of 858 commits · in production</span>
       </article>
 
-      <!-- SWAP: real project -->
-      <article class="card" data-sketch>
-        <span class="kicker">2025 · platform</span>
-        <h3>Ledger</h3>
-        <p>Event-sourced billing spine. Every number on an invoice traces back to the event that produced it, which made disputes a lookup instead of an investigation.</p>
-        <span class="result">0 reconciliation escalations</span>
-        <div class="card-links">
-          <a href="#">case study</a>
-        </div>
+      <article class="card" data-sketch data-anim="rise">
+        <span class="kicker">2026 · my own product</span>
+        <h3>Hundi</h3>
+        <p>Your salary lands, you confirm it, and it splits by percentage into buckets — savings and investments first, expenses get what's left. No bank linking, nothing logged behind your back.</p>
+        <p>It's the Notion tracker I ran on myself for two years, turned into a real app. A hundi is a medieval Indian bill of exchange, and also a temple collection box — which is where the piggy banks come from.</p>
+        <span class="result">sole author · 124 commits</span>
       </article>
 
-      <!-- SWAP: real project -->
-      <article class="card" data-sketch>
-        <span class="kicker">2025 · developer tooling</span>
-        <h3>Doc Master</h3>
-        <p>Documentation agent that reads the codebase before it writes, so every claim carries a real <code>file:line</code> reference instead of a confident guess.</p>
-        <span class="result">used across 6 repos</span>
+      <article class="card" data-sketch data-anim="rise">
+        <span class="kicker">2026 · local AI</span>
+        <h3>Maya</h3>
+        <p>A voice agent that lives on my Linux home server and never phones home — named after the assistant in Iron Man. Ask it about the machine and it answers out loud while the terminal fills in the detail.</p>
+        <p>The fun part is the budget: 4 GB of VRAM. Ollama takes the GPU, Whisper and Piper stay on CPU so they're never fighting over it. Read-only by design — it can tell you about the server, never change it.</p>
+        <span class="result">fits in 4 GB VRAM</span>
+      </article>
+
+      <article class="card" data-sketch data-anim="rise">
+        <span class="kicker">2026 · open source</span>
+        <h3>remotion-video-mcp</h3>
+        <p>Gives Claude a video editor. Describe what you want and it scaffolds the Remotion project, writes the scenes, syncs narration to the words and renders the MP4. Thirteen tools, one <code>composition.json</code> holding the truth, no timeline to drag.</p>
+        <span class="result">public on GitHub</span>
         <div class="card-links">
-          <a href="https://github.com/dev-arctik">source</a>
+          <a href="https://github.com/dev-arctik/remotion-video-mcp">source</a>
         </div>
       </article>
     </div>
@@ -123,9 +118,9 @@
 
   <!-- ============================ JOURNEY ============================ -->
   <section class="wrap reveal" id="journey">
-    <div class="section-head">
-      <h2>The journey so far</h2>
-      <p>Less a résumé, more a record of what I was wrong about and what I learned next.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">The journey so far</h2>
+      <p data-anim="lift">Mechanical engineering degree, WordPress first job, AI agents now. Nothing here was a straight line — every step started as something I taught myself on the side.</p>
     </div>
 
     <!-- Spine sits outside the list: an <ol> may only contain <li> children. -->
@@ -134,33 +129,110 @@
     <!-- role="list" keeps VoiceOver announcing this as a list despite list-style: none. -->
     <ol class="timeline" role="list">
 
-      <!-- SWAP: your real milestones -->
-      <li class="tl-item">
+      <!-- Chronological, oldest first: scrolling down walks forward through time, and the
+           spine and glyphs draw themselves in that direction. -->
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2026 — now</div>
-        <h3>Agent infrastructure at Gradscaler</h3>
-        <p>Taking AI products from MVP to release-ready. Most of the work turns out to be the boring parts: retries, evals, observability, and saying no to features.</p>
+        <div class="tl-body">
+          <div class="tl-year">2020 — 2022</div>
+          <h3>Websites, alongside a mechanical engineering degree</h3>
+          <p>I was studying mechanical engineering and building sites on the side — WordPress and Figma for ArctikCircle, plus whatever I could teach myself at night. The handle on this site is left over from that first team.</p>
+        </div>
+        <!-- Browser window -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 9 13 C 42 11, 78 11, 111 13 C 113 38, 113 64, 111 85 C 78 87, 42 87, 9 85 C 7 64, 7 38, 9 13 Z"/>
+          <path d="M 9 30 C 42 28, 78 28, 111 30"/>
+          <path d="M 17 21 L 23 21"/>
+          <path d="M 29 21 L 35 21"/>
+          <path d="M 41 21 L 47 21"/>
+          <path d="M 20 45 C 42 44, 64 44, 88 45"/>
+          <path d="M 20 59 C 38 58, 56 58, 72 59"/>
+          <path d="M 20 73 C 46 72, 72 72, 96 73"/>
+        </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2025</div>
-        <h3>From scripts to systems</h3>
-        <p>Learned the hard way that a prompt that works in a notebook is not a product. Started building the harness around the model instead of tuning the model.</p>
+        <div class="tl-body">
+          <div class="tl-year">2022</div>
+          <h3>Learned Flutter on my own time</h3>
+          <p>Still writing WordPress for a living, I spent evenings drawing Sierpinski triangles and Barnsley ferns with Flutter's CustomPainter, purely to learn it. The commits are still public. Seven months later that was the job.</p>
+        </div>
+        <!-- Phone drawing the Sierpinski triangle this entry describes -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 35 9 C 34 32, 34 62, 35 87 C 53 89, 68 89, 86 87 C 87 62, 87 32, 86 9 C 68 7, 53 7, 35 9 Z"/>
+          <path d="M 51 81 L 70 81"/>
+          <path d="M 60 24 L 81 62 L 40 62 Z"/>
+          <path d="M 50 43 L 71 43 L 60 62 Z"/>
+        </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2024</div>
-        <h3>Backend depth</h3>
-        <p>Went deep on Python, Postgres and the parts of distributed systems that bite you at 2am. Boring infrastructure under clever systems became the default.</p>
+        <div class="tl-body">
+          <div class="tl-year">2023 — 2024</div>
+          <h3>Backends and the messy middle</h3>
+          <p>Mobile developer first, Flutter and Kotlin. Then at Alendei I moved off the web team into support and built a customer lifecycle system on Zoho webhooks and the WhatsApp API. First time I owned the whole path — request in, data out, and a real person on the other end waiting on a reply.</p>
+        </div>
+        <!-- Server stack talking to a chat bubble -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 8 21 C 27 19, 46 19, 65 21 C 66 28, 66 34, 65 40 C 46 42, 27 42, 8 40 C 7 34, 7 28, 8 21 Z"/>
+          <path d="M 8 51 C 27 49, 46 49, 65 51 C 66 58, 66 64, 65 70 C 46 72, 27 72, 8 70 C 7 64, 7 58, 8 51 Z"/>
+          <path d="M 16 30 L 21 30"/>
+          <path d="M 16 60 L 21 60"/>
+          <path d="M 79 24 C 97 22, 112 26, 113 40 C 114 54, 100 59, 90 58 L 82 68 L 83 57 C 76 52, 77 33, 79 24 Z"/>
+        </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2023</div>
-        <h3>Started shipping</h3>
-        <p>First things that other people actually used. Everything since has been a correction on something I got wrong here.</p>
+        <div class="tl-body">
+          <div class="tl-year">Sept 2024</div>
+          <h3>LangChain in September, the job title in November</h3>
+          <p>Same move as Flutter, second time around. I started pushing agent experiments to my own repos in September, LangGraph a month later, and by November it was my actual title at Gradscaler. Learning in the open, slightly ahead of the job, is the only career strategy that has worked for me twice.</p>
+        </div>
+        <!-- Agent graph: edges first so the nodes draw over them -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 30 32 L 54 50"/>
+          <path d="M 86 27 L 66 49"/>
+          <path d="M 54 60 L 36 74"/>
+          <path d="M 67 59 L 86 69"/>
+          <path d="M 17 28 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0"/>
+          <path d="M 84 22 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0"/>
+          <path d="M 52 55 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0"/>
+          <path d="M 23 78 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0"/>
+          <path d="M 85 72 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0"/>
+        </svg>
+      </li>
+
+      <li class="tl-item" data-anim="lift">
+        <span class="tl-dot" data-sketch="dot"></span>
+        <div class="tl-body">
+          <div class="tl-year">throughout</div>
+          <h3>Freelancing, and the half that isn't code</h3>
+          <p>Freelance work put me in front of people who know their business inside out and know nothing about software. Learning to sit in that conversation and come back with something buildable turned out to matter as much as anything technical — it's the reason the Gabby rebuild happened at all, because I could hear what the mediators were really asking for underneath the feature request.</p>
+        </div>
+        <!-- Two speech bubbles — the client conversation -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 10 17 C 36 15, 64 16, 67 32 C 70 48, 44 52, 31 51 L 20 62 L 22 49 C 12 45, 8 29, 10 17 Z"/>
+          <path d="M 58 42 C 82 40, 110 42, 112 56 C 114 70, 94 74, 84 73 L 76 83 L 77 72 C 62 68, 56 54, 58 42 Z"/>
+        </svg>
+      </li>
+
+      <li class="tl-item" data-anim="lift">
+        <span class="tl-dot" data-sketch="dot"></span>
+        <div class="tl-body">
+          <div class="tl-year">2025 — now</div>
+          <h3>Whole products, not features</h3>
+          <p>Gabby for Better Parenting Plan is the clearest example — I wrote 419 of the 582 commits across a seven-person codebase, then built the follow-up when real mediators told us the AI was doing too much. These days the work runs from the first conversation with a client to the thing that actually runs in front of their users.</p>
+        </div>
+        <!-- Shipped product: a window behind a window, signed off -->
+        <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 30 11 C 58 9, 86 9, 112 11 C 113 28, 113 46, 112 60 C 100 61, 88 61, 76 61"/>
+          <path d="M 8 33 C 34 31, 62 31, 88 33 C 89 52, 89 72, 88 87 C 62 89, 34 89, 8 87 C 6 72, 6 52, 8 33 Z"/>
+          <path d="M 8 48 C 34 46, 62 46, 88 48"/>
+          <path d="M 26 67 L 40 79 L 70 57"/>
+        </svg>
       </li>
     </ol>
     </div>
@@ -168,68 +240,84 @@
 
   <!-- ============================ TOOLKIT ============================ -->
   <section class="wrap reveal" id="toolkit">
-    <div class="section-head">
-      <h2>Toolkit</h2>
-      <p>What I reach for by default. The list is short on purpose.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Toolkit</h2>
+      <p data-anim="lift">What I reach for by default. The list is short on purpose.</p>
     </div>
 
-    <div class="tag-group">
-      <h4>languages</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">languages</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Python</span>
-        <span class="tag" data-sketch>TypeScript</span>
-        <span class="tag" data-sketch>SQL</span>
+        <span class="tag" data-sketch data-anim="pop">Python</span>
+        <span class="tag" data-sketch data-anim="pop">TypeScript</span>
+        <span class="tag" data-sketch data-anim="pop">JavaScript</span>
+        <span class="tag" data-sketch data-anim="pop">Dart</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>backend &amp; data</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">ai &amp; agents</h4>
       <div class="tags">
-        <span class="tag" data-sketch>FastAPI</span>
-        <span class="tag" data-sketch>Postgres</span>
-        <span class="tag" data-sketch>MongoDB</span>
-        <span class="tag" data-sketch>Redis</span>
+        <span class="tag" data-sketch data-anim="pop">LangGraph</span>
+        <span class="tag" data-sketch data-anim="pop">LangChain</span>
+        <span class="tag" data-sketch data-anim="pop">MCP</span>
+        <span class="tag" data-sketch data-anim="pop">Claude API</span>
+        <span class="tag" data-sketch data-anim="pop">OpenAI</span>
+        <span class="tag" data-sketch data-anim="pop">Ollama</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>ai &amp; agents</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">backend &amp; data</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Claude API</span>
-        <span class="tag" data-sketch>MCP</span>
-        <span class="tag" data-sketch>LangGraph</span>
-        <span class="tag" data-sketch>Evals</span>
+        <span class="tag" data-sketch data-anim="pop">FastAPI</span>
+        <span class="tag" data-sketch data-anim="pop">Node.js</span>
+        <span class="tag" data-sketch data-anim="pop">MongoDB</span>
+        <span class="tag" data-sketch data-anim="pop">Redis</span>
+        <span class="tag" data-sketch data-anim="pop">SQLite</span>
+        <span class="tag" data-sketch data-anim="pop">Stripe</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>ops</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">apps &amp; interfaces</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Docker</span>
-        <span class="tag" data-sketch>GitHub Actions</span>
-        <span class="tag" data-sketch>AWS</span>
+        <span class="tag" data-sketch data-anim="pop">React</span>
+        <span class="tag" data-sketch data-anim="pop">Next.js</span>
+        <span class="tag" data-sketch data-anim="pop">React Native</span>
+        <span class="tag" data-sketch data-anim="pop">Electron</span>
+        <span class="tag" data-sketch data-anim="pop">Flutter</span>
+      </div>
+    </div>
+
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">ops</h4>
+      <div class="tags">
+        <span class="tag" data-sketch data-anim="pop">Docker</span>
+        <span class="tag" data-sketch data-anim="pop">AWS</span>
+        <span class="tag" data-sketch data-anim="pop">DigitalOcean</span>
+        <span class="tag" data-sketch data-anim="pop">GitHub Actions</span>
       </div>
     </div>
   </section>
 
   <!-- ============================ CONTACT ============================ -->
   <section class="wrap reveal" id="contact">
-    <div class="section-head">
-      <h2>Get in touch</h2>
-      <p>Building something that needs agents, or stuck getting one out of demo purgatory? I'd like to hear about it.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Get in touch</h2>
+      <p data-anim="lift">Have something that needs building and only a rough idea of the shape? That conversation is the part I like most. Tell me what the problem is and I'll tell you honestly whether I'm the right person for it.</p>
     </div>
 
-    <div class="contact-grid">
-      <div class="contact-card" data-sketch>
+    <div class="contact-grid" data-anim-group data-anim-step="90">
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">email</span>
-        <!-- SWAP: your real contact address -->
-        <a href="mailto:you@example.com">you@example.com</a>
+        <a href="mailto:devansh.arctikcircle@gmail.com">devansh.arctikcircle@gmail.com</a>
       </div>
-      <div class="contact-card" data-sketch>
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">github</span>
         <a href="https://github.com/dev-arctik" rel="me">dev-arctik</a>
       </div>
-      <div class="contact-card" data-sketch>
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">linkedin</span>
         <a href="https://www.linkedin.com/in/devanshraj" rel="me">devanshraj</a>
       </div>
@@ -242,7 +330,7 @@
   <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
 </footer>
 
-<script src="assets/js/sketch.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/sketch.js?v=4"></script>
+<script src="assets/js/main.js?v=4"></script>
 </body>
 </html>
