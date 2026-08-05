@@ -63,7 +63,9 @@
         entry.target.classList.add('in-view');
         obs.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.25 });
+      /* Fires once a tenth of the entry has cleared the bottom 15% of the viewport —
+         early enough that the lift-in is underway before it reaches the reading line. */
+    }, { rootMargin: '0px 0px -15% 0px', threshold: 0.1 });
     tlItems.forEach(item => glyphIo.observe(item));
   }
 
