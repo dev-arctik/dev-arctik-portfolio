@@ -42,6 +42,69 @@
     });
   }
 
+  /* Journey glyphs. Measure every stroke so CSS can draw it on, then reveal per entry
+     as it scrolls in. Measuring here rather than hard-coding lengths keeps the timing
+     right if a path is ever edited. */
+  const tlItems = [...document.querySelectorAll('.tl-item')];
+  tlItems.forEach(item => {
+    item.querySelectorAll('.glyph path').forEach(p => {
+      p.style.setProperty('--len', p.getTotalLength());
+    });
+  });
+
+  if (calm || !('IntersectionObserver' in window)) {
+    /* No animation wanted or available — show them drawn. The class still has to be
+       added: without it the paths sit at dashoffset --len, which is invisible. */
+    tlItems.forEach(item => item.classList.add('in-view'));
+  } else {
+    const glyphIo = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in-view');
+        obs.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.25 });
+    tlItems.forEach(item => glyphIo.observe(item));
+  }
+
+  /* The spine draws downward in step with the scroll, so the line reaches "now" exactly
+     as the last entry does. Skipped under reduced motion, where sketch.js's fully drawn
+     line is left alone. */
+  if (!calm) {
+    const spine = document.querySelector('.spine');
+    let spinePath = null, spineLen = 0, queued = false;
+
+    function paintSpine() {
+      queued = false;
+      if (!spine) return;
+      const p = spine.querySelector('path');
+      if (!p) return;
+      /* sketch.js replaces this path on every redraw, so re-measure on identity change
+         rather than caching once. */
+      if (p !== spinePath) {
+        spinePath = p;
+        spineLen = p.getTotalLength();
+        p.style.strokeDasharray = spineLen;
+      }
+      const rect = spine.getBoundingClientRect();
+      const anchor = window.innerHeight * 0.72;   // ink keeps pace just below mid-screen
+      const t = (anchor - rect.top) / Math.max(1, rect.height);
+      spinePath.style.strokeDashoffset = spineLen * (1 - Math.min(1, Math.max(0, t)));
+    }
+
+    function queueSpine() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paintSpine);
+    }
+
+    window.addEventListener('scroll', queueSpine, { passive: true });
+    window.addEventListener('resize', queueSpine);
+    /* Webfonts land after init and make sketch.js redraw, which swaps the path out. */
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueSpine);
+    paintSpine();
+  }
+
   /* Mark the current section in the nav as you scroll past it. */
   const links = [...document.querySelectorAll('nav a[href^="#"]')];
   const sections = links

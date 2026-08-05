@@ -297,9 +297,43 @@ nav a.current { color: var(--ink); }
 .timeline-wrap { position: relative; }
 .timeline { list-style: none; margin: 0; padding: 0 0 0 52px; }
 .spine { position: absolute; left: 8px; top: 6px; width: 12px; bottom: 6px; }
-.tl-item { position: relative; margin-bottom: 42px; }
+/* Text left, era glyph right — the glyph column is what fills the dead space that the
+   60ch measure used to leave. */
+.tl-item {
+  position: relative;
+  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px;
+  gap: 34px;
+  align-items: start;
+}
 .tl-item:last-child { margin-bottom: 0; }
 .tl-dot { position: absolute; left: -52px; top: 8px; width: 15px; height: 15px; }
+
+/* Hand-drawn era glyph. --len is measured by main.js from getTotalLength(); if the
+   script never runs the var stays unset, both declarations below are invalid at
+   computed-value time, and the glyph simply renders fully drawn rather than blank. */
+.glyph { width: 140px; height: 112px; overflow: visible; }
+.glyph path {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  transition: stroke-dashoffset 0.7s ease-out;
+}
+.tl-item.in-view .glyph path { stroke-dashoffset: 0; }
+/* Stagger so each glyph assembles stroke by stroke instead of appearing at once. */
+.glyph path:nth-child(2) { transition-delay: 0.10s; }
+.glyph path:nth-child(3) { transition-delay: 0.18s; }
+.glyph path:nth-child(4) { transition-delay: 0.26s; }
+.glyph path:nth-child(5) { transition-delay: 0.34s; }
+.glyph path:nth-child(6) { transition-delay: 0.42s; }
+.glyph path:nth-child(7) { transition-delay: 0.50s; }
+.glyph path:nth-child(8) { transition-delay: 0.58s; }
+.glyph path:nth-child(9) { transition-delay: 0.66s; }
 .tl-year {
   font-family: var(--font-display); font-size: 1.05rem;
   color: var(--accent); margin-bottom: 2px;
@@ -357,6 +391,12 @@ footer span { color: var(--accent); }
   .polaroid { margin-left: 0; }
   section { padding: 56px 0; }
 }
+/* Below this the text column is too narrow to give up 140px, and the glyphs are
+   decorative — drop them rather than shrink them into illegibility. */
+@media (max-width: 780px) {
+  .tl-item { grid-template-columns: 1fr; gap: 0; }
+  .glyph { display: none; }
+}
 @media (max-width: 560px) {
   body { font-size: 16.5px; }
   /* Nav drops to its own centred row — four links beside the logo is too cramped here. */
@@ -383,4 +423,7 @@ footer span { color: var(--accent); }
   body { background: #fff; }
   [data-sketch] { border-color: var(--ink) !important; }
   svg.sketch { display: none; }
+  /* Glyphs only reach dashoffset 0 once scrolled into view — force them drawn, or
+     printing a page nobody scrolled through emits blank boxes. */
+  .glyph path { stroke-dashoffset: 0 !important; }
 }
