@@ -71,39 +71,38 @@
   <section class="wrap reveal" id="work">
     <div class="section-head">
       <h2>Selected work</h2>
-      <p>Client products and my own, all built end to end. The client work is private, so these describe what I did rather than link to it.</p>
+      <p>A few things I've built — client work and my own. The client repos are private, so these describe the work rather than link to it.</p>
     </div>
 
     <div class="cards">
       <article class="card" data-sketch>
         <span class="kicker">2025 — 2026 · lead developer</span>
         <h3>Mediator Gabby</h3>
-        <p>AI-assisted mediation for separating parents, live for Better Parenting Plan. A mediator registers the couple; each parent then works through their agreements alone with the agent in a private breakout room, and the system compares both sets of answers into an agree / partly / disagree map the mediator carries into the real session.</p>
-        <p>Thirteen topics across two independently scoped rooms, custody and financial, each its own LangGraph with its own checkpointed state so a couple can be scoped to either or both. Parents never self-register — the mediator is the only way in. FastAPI and MongoDB behind it, React in front, Stripe subscriptions and trials around it.</p>
-        <p>The first version ran the joint session too. Professional mediators said that overreached, so I rebuilt it around them: the agent collects and compares, the human mediates.</p>
+        <p>Separating parents each talk things through alone with the agent, in their own private room. Once both are done it lines the answers up — agreed, partly, not yet — and hands that to their mediator for the real conversation.</p>
+        <p>Live for Better Parenting Plan. The first version ran the joint session too; mediators said that was a step too far, so I rebuilt it around them. Thirteen topics, two scoped rooms, LangGraph and FastAPI underneath.</p>
         <span class="result">615 of 858 commits · in production</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · my own product</span>
         <h3>Hundi</h3>
-        <p>A manual-first personal finance manager for Android, for salaried Indians who would rather not hand an app their bank credentials. Income arrives, you confirm it, and it splits by percentage into typed buckets — investments and savings planned first, expenses take what is left. Nothing is linked and nothing is auto-logged; every rupee is an entry you made on purpose.</p>
-        <p>Productised from the Notion tracker I ran on myself from 2022 to 2024 — five linked databases, three employers, every salary and category logged by hand. The discipline held, the tooling didn't, so Hundi is that same system with reminders, confirmation prompts and a monthly view. Named for the hundi: both a medieval Indian bill of exchange and a temple collection box, which is where the piggy banks come from.</p>
+        <p>Your salary lands, you confirm it, and it splits by percentage into buckets — savings and investments first, expenses get what's left. No bank linking, nothing logged behind your back.</p>
+        <p>It's the Notion tracker I ran on myself for two years, turned into a real app. A hundi is a medieval Indian bill of exchange, and also a temple collection box — which is where the piggy banks come from.</p>
         <span class="result">sole author · 124 commits</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · local AI</span>
         <h3>Maya</h3>
-        <p>A private voice agent living on my own Linux home server, named after the assistant in Iron Man. Ask it about the machine and it answers out loud while the terminal fills in the detail. Nothing leaves the hardware — no cloud, no subscription, nobody else holding the transcript.</p>
-        <p>The interesting part is the budget: 4 GB of VRAM. Ollama holds the GPU while Whisper and Piper run on CPU so they never compete for it. Every tool is read-only by design, so Maya can describe the server but never change it.</p>
+        <p>A voice agent that lives on my Linux home server and never phones home — named after the assistant in Iron Man. Ask it about the machine and it answers out loud while the terminal fills in the detail.</p>
+        <p>The fun part is the budget: 4 GB of VRAM. Ollama takes the GPU, Whisper and Piper stay on CPU so they're never fighting over it. Read-only by design — it can tell you about the server, never change it.</p>
         <span class="result">fits in 4 GB VRAM</span>
       </article>
 
       <article class="card" data-sketch>
         <span class="kicker">2026 · open source</span>
         <h3>remotion-video-mcp</h3>
-        <p>An MCP server that hands Claude a video editor. Thirteen tools cover scaffolding a Remotion project, writing and reordering scenes, syncing narration to word-level timestamps, capturing preview frames and rendering the MP4. A single <code>composition.json</code> is the source of truth and the React components are generated from it, so you describe the video and nobody touches a timeline.</p>
+        <p>Gives Claude a video editor. Describe what you want and it scaffolds the Remotion project, writes the scenes, syncs narration to the words and renders the MP4. Thirteen tools, one <code>composition.json</code> holding the truth, no timeline to drag.</p>
         <span class="result">public on GitHub</span>
         <div class="card-links">
           <a href="https://github.com/dev-arctik/remotion-video-mcp">source</a>
