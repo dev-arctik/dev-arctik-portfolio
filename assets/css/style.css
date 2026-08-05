@@ -89,7 +89,9 @@ code {
 
 /* Marker highlight — angled gradient so it reads as swiped, not filled. */
 mark {
-  background: linear-gradient(100deg, transparent 1%, var(--highlight) 2%, var(--highlight) 96%, transparent 99%);
+  background-image: linear-gradient(100deg, transparent 1%, var(--highlight) 2%, var(--highlight) 96%, transparent 99%);
+  background-repeat: no-repeat;   /* so the reveal can swipe it on from zero width */
+  background-size: 100% 100%;
   padding: 0 3px;
   color: inherit;
 }
@@ -285,9 +287,14 @@ nav a.current { color: var(--ink); }
 .card-links a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
 /* Result strip — the numbers that keep a sketchy site from reading as vague. */
+/* Painted with a gradient rather than a flat background so the fill can be swiped on
+   from zero width — see the reveal section. */
 .result {
   font-family: var(--font-mono); font-size: 0.82rem;
-  color: var(--ink); background: var(--highlight);
+  color: var(--ink);
+  background-image: linear-gradient(var(--highlight), var(--highlight));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   display: inline-block; padding: 2px 8px; margin-top: 4px;
 }
 
@@ -310,25 +317,15 @@ nav a.current { color: var(--ink); }
 .tl-item:last-child { margin-bottom: 0; }
 .tl-dot { position: absolute; left: -52px; top: 8px; width: 15px; height: 15px; }
 
-/* Each entry lifts in as it reaches the reading line, so scrolling feels like the
-   timeline is being laid down rather than already sitting there.
-
-   Gated on .anim, which main.js adds on the same code path that wires up the observer
-   — NOT on .js. The .js class is added by every build of main.js, including an older
-   one still sitting in a browser cache, but only this build knows to add .in-view. A
-   stale script plus this stylesheet would therefore hide every entry and never reveal
-   one, blanking the section. Hiding must only ever be switched on by the same code
-   that can switch it back off. */
-.timeline.anim .tl-item {
+/* Entries lift in via the shared [data-anim="lift"] rule in section 11. Only the
+   marker is timeline-specific: it lands a beat after its text, like it was inked in
+   afterwards rather than arriving with the words. */
+.anim .tl-dot {
+  scale: 0.3;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.55s cubic-bezier(0.22, 0.9, 0.3, 1);
+  transition: scale 0.4s cubic-bezier(0.34, 1.7, 0.5, 1) 0.12s, opacity 0.3s ease-out 0.12s;
 }
-.timeline.anim .tl-item.in-view { opacity: 1; transform: none; }
-
-/* The marker lands a beat after the text, like it was inked in afterwards. */
-.timeline.anim .tl-dot { transform: scale(0.3); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.5, 1) 0.12s, opacity 0.3s ease-out 0.12s; }
-.timeline.anim .tl-item.in-view .tl-dot { transform: scale(1); opacity: 1; }
+.anim .tl-item.in-view .tl-dot { scale: 1; opacity: 1; }
 
 /* Hand-drawn era glyph. Drawn solid by default — the dash trick that hides it lives
    behind .anim for the same reason the entry fade does, so a glyph can never end up
@@ -344,22 +341,22 @@ nav a.current { color: var(--ink); }
 /* --len is measured by main.js from getTotalLength(). Eases out hard so a stroke
    leaves fast and settles, the way a pen does; the base 0.22s delay lets the entry
    finish lifting before the drawing starts. */
-.timeline.anim .glyph path {
+.anim .glyph path {
   stroke-dasharray: var(--len);
   stroke-dashoffset: var(--len);
   transition: stroke-dashoffset 0.55s cubic-bezier(0.25, 0.8, 0.35, 1) 0.22s;
 }
-.timeline.anim .tl-item.in-view .glyph path { stroke-dashoffset: 0; }
+.anim .tl-item.in-view .glyph path { stroke-dashoffset: 0; }
 /* Stagger so a glyph assembles stroke by stroke rather than appearing all at once.
    Steps are tight enough that consecutive strokes overlap and read as one hand. */
-.timeline.anim .glyph path:nth-child(2) { transition-delay: 0.32s; }
-.timeline.anim .glyph path:nth-child(3) { transition-delay: 0.42s; }
-.timeline.anim .glyph path:nth-child(4) { transition-delay: 0.52s; }
-.timeline.anim .glyph path:nth-child(5) { transition-delay: 0.62s; }
-.timeline.anim .glyph path:nth-child(6) { transition-delay: 0.72s; }
-.timeline.anim .glyph path:nth-child(7) { transition-delay: 0.82s; }
-.timeline.anim .glyph path:nth-child(8) { transition-delay: 0.92s; }
-.timeline.anim .glyph path:nth-child(9) { transition-delay: 1.02s; }
+.anim .glyph path:nth-child(2) { transition-delay: 0.32s; }
+.anim .glyph path:nth-child(3) { transition-delay: 0.42s; }
+.anim .glyph path:nth-child(4) { transition-delay: 0.52s; }
+.anim .glyph path:nth-child(5) { transition-delay: 0.62s; }
+.anim .glyph path:nth-child(6) { transition-delay: 0.72s; }
+.anim .glyph path:nth-child(7) { transition-delay: 0.82s; }
+.anim .glyph path:nth-child(8) { transition-delay: 0.92s; }
+.anim .glyph path:nth-child(9) { transition-delay: 1.02s; }
 .tl-year {
   font-family: var(--font-display); font-size: 1.05rem;
   color: var(--accent); margin-bottom: 2px;
@@ -409,6 +406,50 @@ footer span { color: var(--accent); }
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .js .reveal.in { opacity: 1; transform: none; }
 
+/* --- Per-element reveal ------------------------------------------------------
+   [data-anim] marks something that arrives rather than being there already;
+   [data-anim-group] releases its children together on a stagger, so a row of cards
+   reads as one gesture instead of four unrelated ones. main.js writes the per-child
+   delay into --d.
+
+   All of it hangs off .anim, which main.js sets from the same block that releases
+   these elements. Never gate a hidden state on .js: that class is set by every build
+   of main.js ever shipped, so an older cached script would apply the hiding with
+   nothing able to clear it and blank the section.
+
+   Movement uses the independent translate/scale/rotate properties rather than
+   transform, so it composes with the resting tilt already on .card, .tag, .polaroid
+   and .eyebrow instead of overwriting it. */
+.anim [data-anim] {
+  opacity: 0;
+  transition:
+    opacity 0.5s ease-out var(--d, 0ms),
+    translate 0.6s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms),
+    scale 0.6s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms),
+    rotate 0.6s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms),
+    clip-path 0.85s cubic-bezier(0.3, 0.8, 0.3, 1) var(--d, 0ms),
+    background-size 0.7s cubic-bezier(0.4, 0.8, 0.3, 1) var(--d, 0ms);
+}
+.anim [data-anim="lift"]  { translate: 0 20px; }              /* body copy, list rows */
+.anim [data-anim="rise"]  { translate: 0 32px; }              /* cards — further, heavier */
+.anim [data-anim="pop"]   { scale: 0.82; }                    /* chips and tags */
+.anim [data-anim="tilt"]  { translate: 0 24px; rotate: 6deg; }/* the polaroid, dropped in */
+/* Wipes left to right so the name reads as being written, not faded up. The negative
+   vertical inset keeps descenders and the display font's overshoot from clipping. */
+.anim [data-anim="write"] { clip-path: inset(-18% 100% -18% 0); }
+.anim [data-anim="swipe"] { background-size: 0% 100%; }       /* marker over paper */
+
+.anim [data-anim].in-view { opacity: 1; translate: none; scale: none; rotate: none; }
+/* Scoped, not folded into the rule above: a blanket clip-path would crop the sketch
+   overlays, which deliberately overflow their host by 12px. */
+.anim [data-anim="write"].in-view { clip-path: inset(-18% -2% -18% 0); }
+.anim [data-anim="swipe"].in-view { background-size: 100% 100%; }
+
+/* The result chip is a marker stroke, so it swipes rather than fades — and it waits
+   for its card to land first. */
+.anim .card .result { background-size: 0% 100%; transition: background-size 0.6s cubic-bezier(0.4, 0.8, 0.3, 1) 0.4s; }
+.anim .card.in-view .result { background-size: 100% 100%; }
+
 /* ============================================================
    12. Responsive
    ============================================================ */
@@ -443,8 +484,12 @@ footer span { color: var(--accent); }
   /* Must match .js .reveal specificity or the fade-out rule keeps winning here. */
   .js .reveal { opacity: 1; transform: none; }
   /* Covers reduced motion being switched on after load, when .anim is already set and
-     entries below the fold would otherwise stay hidden with no transition to reveal them. */
-  .timeline.anim .tl-item, .timeline.anim .tl-dot { opacity: 1; transform: none; }
+     content below the fold would otherwise stay hidden with no transition to reveal it. */
+  .anim [data-anim], .anim .tl-dot {
+    opacity: 1; translate: none; scale: none; rotate: none;
+    clip-path: none; background-size: 100% 100%;
+  }
+  .anim .card .result { background-size: 100% 100%; }
 }
 
 @media print {
@@ -455,5 +500,9 @@ footer span { color: var(--accent); }
   /* These only reach their end state once scrolled into view — force them, or printing
      a page nobody scrolled through emits blank boxes and missing entries. */
   .glyph path { stroke-dashoffset: 0 !important; }
-  .timeline.anim .tl-item, .timeline.anim .tl-dot { opacity: 1 !important; transform: none !important; }
+  .anim [data-anim], .anim .tl-dot {
+    opacity: 1 !important; translate: none !important; scale: none !important;
+    rotate: none !important; clip-path: none !important; background-size: 100% 100% !important;
+  }
+  .anim .card .result { background-size: 100% 100% !important; }
 }

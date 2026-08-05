@@ -24,7 +24,7 @@
 <!-- ?v= is a manual cache buster. There is no build step to hash filenames, and browsers
      cache CSS and JS independently, so a returning visitor can otherwise end up running
      a new stylesheet against an old script. Bump this whenever either file changes. -->
-<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
 
@@ -49,18 +49,18 @@
   <!-- ============================ HERO ============================ -->
   <section class="hero wrap" id="top">
     <div class="hero-grid">
-      <div>
-        <span class="eyebrow">hey — I'm</span>
-        <h1>Devansh Raj</h1>
-        <p class="lede">I build <mark>AI agent products</mark> end to end at Gradscaler. I got here the long way — WordPress, then Flutter, then backends, then agents — and freelancing taught me the other half of the job: turning what a client is actually asking for into something that ships.</p>
-        <div class="btns">
+      <div data-anim-group data-anim-step="110">
+        <span class="eyebrow" data-anim="lift">hey — I'm</span>
+        <h1 data-anim="write">Devansh Raj</h1>
+        <p class="lede" data-anim="lift">I build <mark data-anim="swipe">AI agent products</mark> end to end at Gradscaler. I got here the long way — WordPress, then Flutter, then backends, then agents — and freelancing taught me the other half of the job: turning what a client is actually asking for into something that ships.</p>
+        <div class="btns" data-anim="lift">
           <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work"><span>see the work</span></a>
           <a class="btn" data-sketch href="#contact"><span>get in touch</span></a>
         </div>
       </div>
 
       <div>
-        <figure class="polaroid" data-sketch>
+        <figure class="polaroid" data-sketch data-anim="tilt">
           <div class="shot">
             <img src="assets/img/me.jpg" alt="Devansh Raj">
           </div>
@@ -72,13 +72,13 @@
 
   <!-- ============================ WORK ============================ -->
   <section class="wrap reveal" id="work">
-    <div class="section-head">
-      <h2>Selected work</h2>
-      <p>A few things I've built — client work and my own. The client repos are private, so these describe the work rather than link to it.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Selected work</h2>
+      <p data-anim="lift">A few things I've built — client work and my own. The client repos are private, so these describe the work rather than link to it.</p>
     </div>
 
-    <div class="cards">
-      <article class="card" data-sketch>
+    <div class="cards" data-anim-group data-anim-step="100">
+      <article class="card" data-sketch data-anim="rise">
         <span class="kicker">2025 — 2026 · lead developer</span>
         <h3>Mediator Gabby</h3>
         <p>Separating parents each talk things through alone with the agent, in their own private room. Once both are done it lines the answers up — agreed, partly, not yet — and hands that to their mediator for the real conversation.</p>
@@ -86,7 +86,7 @@
         <span class="result">615 of 858 commits · in production</span>
       </article>
 
-      <article class="card" data-sketch>
+      <article class="card" data-sketch data-anim="rise">
         <span class="kicker">2026 · my own product</span>
         <h3>Hundi</h3>
         <p>Your salary lands, you confirm it, and it splits by percentage into buckets — savings and investments first, expenses get what's left. No bank linking, nothing logged behind your back.</p>
@@ -94,7 +94,7 @@
         <span class="result">sole author · 124 commits</span>
       </article>
 
-      <article class="card" data-sketch>
+      <article class="card" data-sketch data-anim="rise">
         <span class="kicker">2026 · local AI</span>
         <h3>Maya</h3>
         <p>A voice agent that lives on my Linux home server and never phones home — named after the assistant in Iron Man. Ask it about the machine and it answers out loud while the terminal fills in the detail.</p>
@@ -102,7 +102,7 @@
         <span class="result">fits in 4 GB VRAM</span>
       </article>
 
-      <article class="card" data-sketch>
+      <article class="card" data-sketch data-anim="rise">
         <span class="kicker">2026 · open source</span>
         <h3>remotion-video-mcp</h3>
         <p>Gives Claude a video editor. Describe what you want and it scaffolds the Remotion project, writes the scenes, syncs narration to the words and renders the MP4. Thirteen tools, one <code>composition.json</code> holding the truth, no timeline to drag.</p>
@@ -116,9 +116,9 @@
 
   <!-- ============================ JOURNEY ============================ -->
   <section class="wrap reveal" id="journey">
-    <div class="section-head">
-      <h2>The journey so far</h2>
-      <p>Mechanical engineering degree, WordPress first job, AI agents now. Nothing here was a straight line — every step started as something I taught myself on the side.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">The journey so far</h2>
+      <p data-anim="lift">Mechanical engineering degree, WordPress first job, AI agents now. Nothing here was a straight line — every step started as something I taught myself on the side.</p>
     </div>
 
     <!-- Spine sits outside the list: an <ol> may only contain <li> children. -->
@@ -129,7 +129,7 @@
 
       <!-- Chronological, oldest first: scrolling down walks forward through time, and the
            spine and glyphs draw themselves in that direction. -->
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">2020 — 2022</div>
@@ -149,7 +149,7 @@
         </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">2022</div>
@@ -165,7 +165,7 @@
         </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">2023 — 2024</div>
@@ -182,7 +182,7 @@
         </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">Sept 2024</div>
@@ -203,7 +203,7 @@
         </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">throughout</div>
@@ -217,7 +217,7 @@
         </svg>
       </li>
 
-      <li class="tl-item">
+      <li class="tl-item" data-anim="lift">
         <span class="tl-dot" data-sketch="dot"></span>
         <div class="tl-body">
           <div class="tl-year">2025 — now</div>
@@ -238,84 +238,84 @@
 
   <!-- ============================ TOOLKIT ============================ -->
   <section class="wrap reveal" id="toolkit">
-    <div class="section-head">
-      <h2>Toolkit</h2>
-      <p>What I reach for by default. The list is short on purpose.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Toolkit</h2>
+      <p data-anim="lift">What I reach for by default. The list is short on purpose.</p>
     </div>
 
-    <div class="tag-group">
-      <h4>languages</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">languages</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Python</span>
-        <span class="tag" data-sketch>TypeScript</span>
-        <span class="tag" data-sketch>JavaScript</span>
-        <span class="tag" data-sketch>Dart</span>
+        <span class="tag" data-sketch data-anim="pop">Python</span>
+        <span class="tag" data-sketch data-anim="pop">TypeScript</span>
+        <span class="tag" data-sketch data-anim="pop">JavaScript</span>
+        <span class="tag" data-sketch data-anim="pop">Dart</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>ai &amp; agents</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">ai &amp; agents</h4>
       <div class="tags">
-        <span class="tag" data-sketch>LangGraph</span>
-        <span class="tag" data-sketch>LangChain</span>
-        <span class="tag" data-sketch>MCP</span>
-        <span class="tag" data-sketch>Claude API</span>
-        <span class="tag" data-sketch>OpenAI</span>
-        <span class="tag" data-sketch>Ollama</span>
+        <span class="tag" data-sketch data-anim="pop">LangGraph</span>
+        <span class="tag" data-sketch data-anim="pop">LangChain</span>
+        <span class="tag" data-sketch data-anim="pop">MCP</span>
+        <span class="tag" data-sketch data-anim="pop">Claude API</span>
+        <span class="tag" data-sketch data-anim="pop">OpenAI</span>
+        <span class="tag" data-sketch data-anim="pop">Ollama</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>backend &amp; data</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">backend &amp; data</h4>
       <div class="tags">
-        <span class="tag" data-sketch>FastAPI</span>
-        <span class="tag" data-sketch>Node.js</span>
-        <span class="tag" data-sketch>MongoDB</span>
-        <span class="tag" data-sketch>Redis</span>
-        <span class="tag" data-sketch>SQLite</span>
-        <span class="tag" data-sketch>Stripe</span>
+        <span class="tag" data-sketch data-anim="pop">FastAPI</span>
+        <span class="tag" data-sketch data-anim="pop">Node.js</span>
+        <span class="tag" data-sketch data-anim="pop">MongoDB</span>
+        <span class="tag" data-sketch data-anim="pop">Redis</span>
+        <span class="tag" data-sketch data-anim="pop">SQLite</span>
+        <span class="tag" data-sketch data-anim="pop">Stripe</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>apps &amp; interfaces</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">apps &amp; interfaces</h4>
       <div class="tags">
-        <span class="tag" data-sketch>React</span>
-        <span class="tag" data-sketch>Next.js</span>
-        <span class="tag" data-sketch>React Native</span>
-        <span class="tag" data-sketch>Electron</span>
-        <span class="tag" data-sketch>Flutter</span>
+        <span class="tag" data-sketch data-anim="pop">React</span>
+        <span class="tag" data-sketch data-anim="pop">Next.js</span>
+        <span class="tag" data-sketch data-anim="pop">React Native</span>
+        <span class="tag" data-sketch data-anim="pop">Electron</span>
+        <span class="tag" data-sketch data-anim="pop">Flutter</span>
       </div>
     </div>
 
-    <div class="tag-group">
-      <h4>ops</h4>
+    <div class="tag-group" data-anim-group data-anim-step="45">
+      <h4 data-anim="lift">ops</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Docker</span>
-        <span class="tag" data-sketch>AWS</span>
-        <span class="tag" data-sketch>DigitalOcean</span>
-        <span class="tag" data-sketch>GitHub Actions</span>
+        <span class="tag" data-sketch data-anim="pop">Docker</span>
+        <span class="tag" data-sketch data-anim="pop">AWS</span>
+        <span class="tag" data-sketch data-anim="pop">DigitalOcean</span>
+        <span class="tag" data-sketch data-anim="pop">GitHub Actions</span>
       </div>
     </div>
   </section>
 
   <!-- ============================ CONTACT ============================ -->
   <section class="wrap reveal" id="contact">
-    <div class="section-head">
-      <h2>Get in touch</h2>
-      <p>Have something that needs building and only a rough idea of the shape? That conversation is the part I like most. Tell me what the problem is and I'll tell you honestly whether I'm the right person for it.</p>
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">Get in touch</h2>
+      <p data-anim="lift">Have something that needs building and only a rough idea of the shape? That conversation is the part I like most. Tell me what the problem is and I'll tell you honestly whether I'm the right person for it.</p>
     </div>
 
-    <div class="contact-grid">
-      <div class="contact-card" data-sketch>
+    <div class="contact-grid" data-anim-group data-anim-step="90">
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">email</span>
         <a href="mailto:devansh.arctikcircle@gmail.com">devansh.arctikcircle@gmail.com</a>
       </div>
-      <div class="contact-card" data-sketch>
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">github</span>
         <a href="https://github.com/dev-arctik" rel="me">dev-arctik</a>
       </div>
-      <div class="contact-card" data-sketch>
+      <div class="contact-card" data-sketch data-anim="rise">
         <span class="kicker">linkedin</span>
         <a href="https://www.linkedin.com/in/devanshraj" rel="me">devanshraj</a>
       </div>
@@ -328,7 +328,7 @@
   <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
 </footer>
 
-<script src="assets/js/sketch.js?v=2"></script>
-<script src="assets/js/main.js?v=2"></script>
+<script src="assets/js/sketch.js?v=3"></script>
+<script src="assets/js/main.js?v=3"></script>
 </body>
 </html>
