@@ -65,6 +65,8 @@ Opening `index.html` directly works. For a local server:
 python3 -m http.server 8000
 ```
 
+**Bump `?v=` in `index.html` whenever you edit `style.css` or a JS file.** There's no build step to hash filenames, and browsers cache CSS and JS independently — without it a returning visitor can run a new stylesheet against an old script. `http.server` in particular sends no `Cache-Control` at all, so it will happily serve you a stale script for hours and make an edit look like it did nothing.
+
 ## Deploying
 
 It's static, so anything works — Netlify drop, Vercel, GitHub Pages, Cloudflare Pages. For GitHub Pages: push to a repo, then Settings → Pages → deploy from branch root.
