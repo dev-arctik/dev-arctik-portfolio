@@ -167,14 +167,20 @@ nav a {
   font-size: 1rem;
   padding-bottom: 7px;
 }
-nav a svg.sketch {
+/* Must out-specify the generic [data-sketch] > svg.sketch overlay rule, which scores
+   (0,2,1) — a plain `nav a svg.sketch` is only (0,1,3) and loses. When it lost, the
+   14-unit viewBox got stretched over a 49px box and preserveAspectRatio="none" turned
+   the squiggle into a blob sitting on top of the label instead of a line under it. */
+a[data-sketch="underline"] > svg.sketch {
   inset: auto; left: -5px; bottom: -3px;
   width: calc(100% + 10px); height: 14px;
 }
-/* Draw-on rather than fade-in — a squiggle should look like it was just drawn. */
+/* Draw-on rather than fade-in — a squiggle should look like it was just drawn.
+   Translucent so it reads as marker laid over paper rather than a solid rule. */
 nav a svg.sketch path {
   stroke-dasharray: var(--len);
   stroke-dashoffset: var(--len);
+  opacity: 0.55;
   transition: stroke-dashoffset 0.3s ease-out;
 }
 nav a:hover svg.sketch path,
@@ -209,10 +215,9 @@ nav a.current { color: var(--ink); }
   text-align: center; font-family: var(--font-note);
   font-size: 1.15rem; color: #8d8577; padding: 12px;
 }
-/* Right-aligned crop: the square GitHub avatar carries leftover "DEVELOPER DEVANSH"
-   lettering down its left edge. A centred cover crop leaves a sliver of it visible, so
-   take the whole 20% overflow off the left instead. Revisit if the photo is replaced. */
-.polaroid .shot img { width: 100%; height: 100%; object-fit: cover; object-position: 100% center; display: block; }
+/* me.jpg is pre-cropped to 4:5 to match .shot, so cover has nothing left to trim and
+   the subject stays centred. A photo of another ratio will be centre-cropped instead. */
+.polaroid .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .polaroid .caption {
   font-family: var(--font-note); font-size: 1.25rem;
   color: var(--ink-soft); text-align: center; padding: 8px 4px 12px;
