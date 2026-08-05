@@ -24,7 +24,7 @@
 <!-- ?v= is a manual cache buster. There is no build step to hash filenames, and browsers
      cache CSS and JS independently, so a returning visitor can otherwise end up running
      a new stylesheet against an old script. Bump this whenever either file changes. -->
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+<link rel="stylesheet" href="assets/css/style.css?v=4">
 </head>
 <body>
 
@@ -49,13 +49,15 @@
   <!-- ============================ HERO ============================ -->
   <section class="hero wrap" id="top">
     <div class="hero-grid">
-      <div data-anim-group data-anim-step="110">
+      <div data-anim-group data-anim-step="90">
         <span class="eyebrow" data-anim="lift">hey — I'm</span>
         <h1 data-anim="write">Devansh Raj</h1>
         <p class="lede" data-anim="lift">I build <mark data-anim="swipe">AI agent products</mark> end to end at Gradscaler. I got here the long way — WordPress, then Flutter, then backends, then agents — and freelancing taught me the other half of the job: turning what a client is actually asking for into something that ships.</p>
-        <div class="btns" data-anim="lift">
-          <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work"><span>see the work</span></a>
-          <a class="btn" data-sketch href="#contact"><span>get in touch</span></a>
+        <!-- Each button carries its own data-anim so they land one after the other
+             rather than as a single block — the primary first, since that's the ask. -->
+        <div class="btns">
+          <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work" data-anim="lift"><span>see the work</span></a>
+          <a class="btn" data-sketch href="#contact" data-anim="lift"><span>get in touch</span></a>
         </div>
       </div>
 
@@ -328,7 +330,7 @@
   <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
 </footer>
 
-<script src="assets/js/sketch.js?v=3"></script>
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/sketch.js?v=4"></script>
+<script src="assets/js/main.js?v=4"></script>
 </body>
 </html>

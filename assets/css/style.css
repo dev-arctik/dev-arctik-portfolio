@@ -445,6 +445,21 @@ footer span { color: var(--accent); }
 .anim [data-anim="write"].in-view { clip-path: inset(-18% -2% -18% 0); }
 .anim [data-anim="swipe"].in-view { background-size: 100% 100%; }
 
+/* The polaroid is solo rather than in the hero group, so nothing writes --d for it.
+   Hold it back until the name has started writing — the photo being tossed down after
+   the greeting reads better than both arriving together. */
+.anim .polaroid[data-anim] { --d: 240ms; }
+
+/* And it should develop, not arrive finished. The image comes up from a washed-out
+   ghost to full colour once the frame has landed, which is the one thing a polaroid
+   does that no other photo does. Opacity starts above zero so the ghost is visible. */
+.anim .polaroid .shot img {
+  opacity: 0.12;
+  filter: saturate(0.15) contrast(0.75) brightness(1.2);
+  transition: opacity 0.9s ease-out 0.6s, filter 1.2s ease-out 0.6s;
+}
+.anim .polaroid.in-view .shot img { opacity: 1; filter: none; }
+
 /* The result chip is a marker stroke, so it swipes rather than fades — and it waits
    for its card to land first. */
 .anim .card .result { background-size: 0% 100%; transition: background-size 0.6s cubic-bezier(0.4, 0.8, 0.3, 1) 0.4s; }
@@ -490,6 +505,7 @@ footer span { color: var(--accent); }
     clip-path: none; background-size: 100% 100%;
   }
   .anim .card .result { background-size: 100% 100%; }
+  .anim .polaroid .shot img { opacity: 1; filter: none; }
 }
 
 @media print {
@@ -505,4 +521,5 @@ footer span { color: var(--accent); }
     rotate: none !important; clip-path: none !important; background-size: 100% 100% !important;
   }
   .anim .card .result { background-size: 100% 100% !important; }
+  .anim .polaroid .shot img { opacity: 1 !important; filter: none !important; }
 }
