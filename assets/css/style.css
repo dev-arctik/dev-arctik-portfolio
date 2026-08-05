@@ -209,7 +209,10 @@ nav a.current { color: var(--ink); }
   text-align: center; font-family: var(--font-note);
   font-size: 1.15rem; color: #8d8577; padding: 12px;
 }
-.polaroid .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Right-aligned crop: the square GitHub avatar carries leftover "DEVELOPER DEVANSH"
+   lettering down its left edge. A centred cover crop leaves a sliver of it visible, so
+   take the whole 20% overflow off the left instead. Revisit if the photo is replaced. */
+.polaroid .shot img { width: 100%; height: 100%; object-fit: cover; object-position: 100% center; display: block; }
 .polaroid .caption {
   font-family: var(--font-note); font-size: 1.25rem;
   color: var(--ink-soft); text-align: center; padding: 8px 4px 12px;
@@ -246,7 +249,17 @@ nav a.current { color: var(--ink); }
 /* ============================================================
    7. Cards / work
    ============================================================ */
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 36px; }
+/* 360px min resolves to two columns at the 1080px wrap, so four cards sit as a 2x2
+   instead of leaving one stranded on a second row — revisit it if the card count
+   changes. align-items: start then lets each card size to its own copy; stretching
+   them to a shared row height leaves dead space under the shorter ones, which reads
+   as an unfinished card rather than a deliberately ragged pinboard. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  align-items: start;
+  gap: 36px;
+}
 .card {
   background: var(--paper-card);
   padding: 26px 26px 22px;

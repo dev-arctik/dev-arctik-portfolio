@@ -2,7 +2,7 @@
   index.html
   The portfolio itself — a single static page, no build step and no backend.
   Sections: hero, work, journey (progress over time), toolkit, contact.
-  Anything marked SWAP is placeholder content waiting for your real details.
+  Copy and photo are real. One placeholder remains, marked SWAP: the og:url.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@
       <div>
         <span class="eyebrow">hey — I'm</span>
         <h1>Devansh Raj</h1>
-        <p class="lede">I build <mark>AI agent-enabled software</mark> at Gradscaler, taking products from scrappy MVP to release-ready — the unglamorous plumbing that decides whether a demo becomes a product.</p>
+        <p class="lede">I build <mark>AI agent products</mark> end to end at Gradscaler. I got here the long way — WordPress, then Flutter, then backends, then agents — and freelancing taught me the other half of the job: turning what a client is actually asking for into something that ships.</p>
         <div class="btns">
           <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="#work"><span>see the work</span></a>
           <a class="btn" data-sketch href="#contact"><span>get in touch</span></a>
@@ -58,10 +58,8 @@
 
       <div>
         <figure class="polaroid" data-sketch>
-          <!-- SWAP: drop a photo at assets/img/me.jpg and uncomment the img tag -->
           <div class="shot">
-            <!-- <img src="assets/img/me.jpg" alt="Devansh Raj"> -->
-            your photo here
+            <img src="assets/img/me.jpg" alt="Devansh Raj">
           </div>
           <figcaption class="caption">building things that ship</figcaption>
         </figure>
@@ -81,41 +79,39 @@
   <section class="wrap reveal" id="work">
     <div class="section-head">
       <h2>Selected work</h2>
-      <p>A few things I've built end to end. Each one shipped and got used by someone who wasn't me.</p>
+      <p>Client products and my own, all built end to end. The client work is private, so these describe what I did rather than link to it.</p>
     </div>
 
     <div class="cards">
-      <!-- SWAP: real project -->
       <article class="card" data-sketch>
-        <span class="kicker">2026 · agent infrastructure</span>
-        <h3>Orchestrator</h3>
-        <p>Multi-agent runtime with deterministic control flow — fan-out, verification passes, and structured output that survives bad model days.</p>
-        <span class="result">40 min review → 4 min</span>
-        <div class="card-links">
-          <a href="#">case study</a>
-          <a href="https://github.com/dev-arctik">source</a>
-        </div>
+        <span class="kicker">2025 — 2026 · lead developer</span>
+        <h3>Mediator Gabby</h3>
+        <p>AI mediation for separating parents, built for Better Parenting Plan. Each parent works through custody, holidays and travel alone with the agent in a private breakout room, and the system compares both sets of answers into a colour-coded agreement map.</p>
+        <p>The first version ran the joint session too. Professional mediators told us that was a step too far, so I rebuilt it around them — the agent does the collection and the comparison, the human runs the mediation. LangGraph over FastAPI, React front end.</p>
+        <span class="result">615 of 858 commits · lead developer</span>
       </article>
 
-      <!-- SWAP: real project -->
       <article class="card" data-sketch>
-        <span class="kicker">2025 · platform</span>
-        <h3>Ledger</h3>
-        <p>Event-sourced billing spine. Every number on an invoice traces back to the event that produced it, which made disputes a lookup instead of an investigation.</p>
-        <span class="result">0 reconciliation escalations</span>
-        <div class="card-links">
-          <a href="#">case study</a>
-        </div>
+        <span class="kicker">2026 · my own product</span>
+        <h3>Hundi</h3>
+        <p>A manual-first personal finance manager for Android. Income arrives and you split it by percentage — investments and savings are planned first, expenses get whatever is left. No bank linking, no UPI, nothing logged without you confirming it. Productised from the Notion system I ran on myself for two years.</p>
+        <span class="result">sole author · 124 commits</span>
       </article>
 
-      <!-- SWAP: real project -->
       <article class="card" data-sketch>
-        <span class="kicker">2025 · developer tooling</span>
-        <h3>Doc Master</h3>
-        <p>Documentation agent that reads the codebase before it writes, so every claim carries a real <code>file:line</code> reference instead of a confident guess.</p>
-        <span class="result">used across 6 repos</span>
+        <span class="kicker">2026 · local AI</span>
+        <h3>Maya</h3>
+        <p>A voice agent that runs entirely on my own Linux home server, with nothing going to the cloud. Ollama keeps the GPU while Whisper and Piper stay on CPU so they never compete for VRAM, and the whole thing fits inside 4 GB. Every tool is read-only by design — it can describe the server, never change it.</p>
+        <span class="result">fits in 4 GB VRAM</span>
+      </article>
+
+      <article class="card" data-sketch>
+        <span class="kicker">2026 · open source</span>
+        <h3>remotion-video-mcp</h3>
+        <p>An MCP server that hands Claude a video editor. Scaffold a Remotion project, write and reorder scenes, sync narration against word-level timestamps, capture preview frames and render the final MP4 — all of it through conversation rather than a timeline UI.</p>
+        <span class="result">public on GitHub</span>
         <div class="card-links">
-          <a href="https://github.com/dev-arctik">source</a>
+          <a href="https://github.com/dev-arctik/remotion-video-mcp">source</a>
         </div>
       </article>
     </div>
@@ -125,7 +121,7 @@
   <section class="wrap reveal" id="journey">
     <div class="section-head">
       <h2>The journey so far</h2>
-      <p>Less a résumé, more a record of what I was wrong about and what I learned next.</p>
+      <p>Mechanical engineering degree, WordPress first job, AI agents now. Nothing here was a straight line — every step started as something I taught myself on the side.</p>
     </div>
 
     <!-- Spine sits outside the list: an <ol> may only contain <li> children. -->
@@ -134,33 +130,46 @@
     <!-- role="list" keeps VoiceOver announcing this as a list despite list-style: none. -->
     <ol class="timeline" role="list">
 
-      <!-- SWAP: your real milestones -->
       <li class="tl-item">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2026 — now</div>
-        <h3>Agent infrastructure at Gradscaler</h3>
-        <p>Taking AI products from MVP to release-ready. Most of the work turns out to be the boring parts: retries, evals, observability, and saying no to features.</p>
+        <div class="tl-year">2025 — now</div>
+        <h3>Whole products, not features</h3>
+        <p>Gabby for Better Parenting Plan is the clearest example — I wrote 419 of the 582 commits across a seven-person codebase, then built the follow-up when real mediators told us the AI was doing too much. These days the work runs from the first conversation with a client to the thing that actually runs in front of their users.</p>
       </li>
 
       <li class="tl-item">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2025</div>
-        <h3>From scripts to systems</h3>
-        <p>Learned the hard way that a prompt that works in a notebook is not a product. Started building the harness around the model instead of tuning the model.</p>
+        <div class="tl-year">throughout</div>
+        <h3>Freelancing, and the half that isn't code</h3>
+        <p>Freelance work put me in front of people who know their business inside out and know nothing about software. Learning to sit in that conversation and come back with something buildable turned out to matter as much as anything technical — it's the reason the Gabby rebuild happened at all, because I could hear what the mediators were really asking for underneath the feature request.</p>
       </li>
 
       <li class="tl-item">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2024</div>
-        <h3>Backend depth</h3>
-        <p>Went deep on Python, Postgres and the parts of distributed systems that bite you at 2am. Boring infrastructure under clever systems became the default.</p>
+        <div class="tl-year">Sept 2024</div>
+        <h3>LangChain in September, the job title in November</h3>
+        <p>Same move as Flutter, second time around. I started pushing agent experiments to my own repos in September, LangGraph a month later, and by November it was my actual title at Gradscaler. Learning in the open, slightly ahead of the job, is the only career strategy that has worked for me twice.</p>
       </li>
 
       <li class="tl-item">
         <span class="tl-dot" data-sketch="dot"></span>
-        <div class="tl-year">2023</div>
-        <h3>Started shipping</h3>
-        <p>First things that other people actually used. Everything since has been a correction on something I got wrong here.</p>
+        <div class="tl-year">2023 — 2024</div>
+        <h3>Backends and the messy middle</h3>
+        <p>Mobile developer first, Flutter and Kotlin. Then at Alendei I moved off the web team into support and built a customer lifecycle system on Zoho webhooks and the WhatsApp API. First time I owned the whole path — request in, data out, and a real person on the other end waiting on a reply.</p>
+      </li>
+
+      <li class="tl-item">
+        <span class="tl-dot" data-sketch="dot"></span>
+        <div class="tl-year">2022</div>
+        <h3>Learned Flutter on my own time</h3>
+        <p>Still writing WordPress for a living, I spent evenings drawing Sierpinski triangles and Barnsley ferns with Flutter's CustomPainter, purely to learn it. The commits are still public. Seven months later that was the job.</p>
+      </li>
+
+      <li class="tl-item">
+        <span class="tl-dot" data-sketch="dot"></span>
+        <div class="tl-year">2020 — 2022</div>
+        <h3>Websites, alongside a mechanical engineering degree</h3>
+        <p>I was studying mechanical engineering and building sites on the side — WordPress and Figma for ArctikCircle, plus whatever I could teach myself at night. The handle on this site is left over from that first team.</p>
       </li>
     </ol>
     </div>
@@ -178,7 +187,20 @@
       <div class="tags">
         <span class="tag" data-sketch>Python</span>
         <span class="tag" data-sketch>TypeScript</span>
-        <span class="tag" data-sketch>SQL</span>
+        <span class="tag" data-sketch>JavaScript</span>
+        <span class="tag" data-sketch>Dart</span>
+      </div>
+    </div>
+
+    <div class="tag-group">
+      <h4>ai &amp; agents</h4>
+      <div class="tags">
+        <span class="tag" data-sketch>LangGraph</span>
+        <span class="tag" data-sketch>LangChain</span>
+        <span class="tag" data-sketch>MCP</span>
+        <span class="tag" data-sketch>Claude API</span>
+        <span class="tag" data-sketch>OpenAI</span>
+        <span class="tag" data-sketch>Ollama</span>
       </div>
     </div>
 
@@ -186,19 +208,21 @@
       <h4>backend &amp; data</h4>
       <div class="tags">
         <span class="tag" data-sketch>FastAPI</span>
-        <span class="tag" data-sketch>Postgres</span>
+        <span class="tag" data-sketch>Node.js</span>
         <span class="tag" data-sketch>MongoDB</span>
         <span class="tag" data-sketch>Redis</span>
+        <span class="tag" data-sketch>SQLite</span>
       </div>
     </div>
 
     <div class="tag-group">
-      <h4>ai &amp; agents</h4>
+      <h4>apps &amp; interfaces</h4>
       <div class="tags">
-        <span class="tag" data-sketch>Claude API</span>
-        <span class="tag" data-sketch>MCP</span>
-        <span class="tag" data-sketch>LangGraph</span>
-        <span class="tag" data-sketch>Evals</span>
+        <span class="tag" data-sketch>React</span>
+        <span class="tag" data-sketch>Next.js</span>
+        <span class="tag" data-sketch>React Native</span>
+        <span class="tag" data-sketch>Electron</span>
+        <span class="tag" data-sketch>Flutter</span>
       </div>
     </div>
 
@@ -206,8 +230,8 @@
       <h4>ops</h4>
       <div class="tags">
         <span class="tag" data-sketch>Docker</span>
+        <span class="tag" data-sketch>DigitalOcean</span>
         <span class="tag" data-sketch>GitHub Actions</span>
-        <span class="tag" data-sketch>AWS</span>
       </div>
     </div>
   </section>
@@ -216,14 +240,13 @@
   <section class="wrap reveal" id="contact">
     <div class="section-head">
       <h2>Get in touch</h2>
-      <p>Building something that needs agents, or stuck getting one out of demo purgatory? I'd like to hear about it.</p>
+      <p>Have something that needs building and only a rough idea of the shape? That conversation is the part I like most. Tell me what the problem is and I'll tell you honestly whether I'm the right person for it.</p>
     </div>
 
     <div class="contact-grid">
       <div class="contact-card" data-sketch>
         <span class="kicker">email</span>
-        <!-- SWAP: your real contact address -->
-        <a href="mailto:you@example.com">you@example.com</a>
+        <a href="mailto:devansh.arctikcircle@gmail.com">devansh.arctikcircle@gmail.com</a>
       </div>
       <div class="contact-card" data-sketch>
         <span class="kicker">github</span>
