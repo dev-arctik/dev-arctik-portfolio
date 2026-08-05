@@ -53,10 +53,17 @@
   });
 
   if (calm || !('IntersectionObserver' in window)) {
-    /* No animation wanted or available — show them drawn. The class still has to be
-       added: without it the paths sit at dashoffset --len, which is invisible. */
+    /* No animation wanted or available. .anim is deliberately not set, so the entries
+       are never hidden in the first place; .in-view is still needed to take the glyph
+       paths to dashoffset 0. */
     tlItems.forEach(item => item.classList.add('in-view'));
   } else {
+    /* Switch the hidden start state on here, in the same block that wires up the
+       observer that clears it. Anything that hides content must be applied by the code
+       able to reveal it, or a cached older build of this file leaves the section blank. */
+    const timeline = document.querySelector('.timeline');
+    if (timeline) timeline.classList.add('anim');
+
     const glyphIo = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;

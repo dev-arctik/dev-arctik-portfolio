@@ -311,22 +311,28 @@ nav a.current { color: var(--ink); }
 .tl-dot { position: absolute; left: -52px; top: 8px; width: 15px; height: 15px; }
 
 /* Each entry lifts in as it reaches the reading line, so scrolling feels like the
-   timeline is being laid down rather than already sitting there. Gated on .js for the
-   same reason .reveal is — if the script dies, nothing is left invisible. */
-.js .tl-item {
+   timeline is being laid down rather than already sitting there.
+
+   Gated on .anim, which main.js adds on the same code path that wires up the observer
+   — NOT on .js. The .js class is added by every build of main.js, including an older
+   one still sitting in a browser cache, but only this build knows to add .in-view. A
+   stale script plus this stylesheet would therefore hide every entry and never reveal
+   one, blanking the section. Hiding must only ever be switched on by the same code
+   that can switch it back off. */
+.timeline.anim .tl-item {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease-out, transform 0.55s cubic-bezier(0.22, 0.9, 0.3, 1);
 }
-.js .tl-item.in-view { opacity: 1; transform: none; }
+.timeline.anim .tl-item.in-view { opacity: 1; transform: none; }
 
 /* The marker lands a beat after the text, like it was inked in afterwards. */
-.js .tl-dot { transform: scale(0.3); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.5, 1) 0.12s, opacity 0.3s ease-out 0.12s; }
-.js .tl-item.in-view .tl-dot { transform: scale(1); opacity: 1; }
+.timeline.anim .tl-dot { transform: scale(0.3); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.5, 1) 0.12s, opacity 0.3s ease-out 0.12s; }
+.timeline.anim .tl-item.in-view .tl-dot { transform: scale(1); opacity: 1; }
 
-/* Hand-drawn era glyph. --len is measured by main.js from getTotalLength(); if the
-   script never runs the var stays unset, both declarations below are invalid at
-   computed-value time, and the glyph simply renders fully drawn rather than blank. */
+/* Hand-drawn era glyph. Drawn solid by default — the dash trick that hides it lives
+   behind .anim for the same reason the entry fade does, so a glyph can never end up
+   hidden by a stylesheet that arrived without the script able to reveal it. */
 .glyph { width: 140px; height: 112px; overflow: visible; }
 .glyph path {
   fill: none;
@@ -334,23 +340,26 @@ nav a.current { color: var(--ink); }
   stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+/* --len is measured by main.js from getTotalLength(). Eases out hard so a stroke
+   leaves fast and settles, the way a pen does; the base 0.22s delay lets the entry
+   finish lifting before the drawing starts. */
+.timeline.anim .glyph path {
   stroke-dasharray: var(--len);
   stroke-dashoffset: var(--len);
-  /* Eases out hard so a stroke leaves fast and settles, the way a pen does. The base
-     0.22s delay lets the entry finish lifting before the drawing starts. */
   transition: stroke-dashoffset 0.55s cubic-bezier(0.25, 0.8, 0.35, 1) 0.22s;
 }
-.tl-item.in-view .glyph path { stroke-dashoffset: 0; }
+.timeline.anim .tl-item.in-view .glyph path { stroke-dashoffset: 0; }
 /* Stagger so a glyph assembles stroke by stroke rather than appearing all at once.
    Steps are tight enough that consecutive strokes overlap and read as one hand. */
-.glyph path:nth-child(2) { transition-delay: 0.32s; }
-.glyph path:nth-child(3) { transition-delay: 0.42s; }
-.glyph path:nth-child(4) { transition-delay: 0.52s; }
-.glyph path:nth-child(5) { transition-delay: 0.62s; }
-.glyph path:nth-child(6) { transition-delay: 0.72s; }
-.glyph path:nth-child(7) { transition-delay: 0.82s; }
-.glyph path:nth-child(8) { transition-delay: 0.92s; }
-.glyph path:nth-child(9) { transition-delay: 1.02s; }
+.timeline.anim .glyph path:nth-child(2) { transition-delay: 0.32s; }
+.timeline.anim .glyph path:nth-child(3) { transition-delay: 0.42s; }
+.timeline.anim .glyph path:nth-child(4) { transition-delay: 0.52s; }
+.timeline.anim .glyph path:nth-child(5) { transition-delay: 0.62s; }
+.timeline.anim .glyph path:nth-child(6) { transition-delay: 0.72s; }
+.timeline.anim .glyph path:nth-child(7) { transition-delay: 0.82s; }
+.timeline.anim .glyph path:nth-child(8) { transition-delay: 0.92s; }
+.timeline.anim .glyph path:nth-child(9) { transition-delay: 1.02s; }
 .tl-year {
   font-family: var(--font-display); font-size: 1.05rem;
   color: var(--accent); margin-bottom: 2px;
@@ -433,7 +442,9 @@ footer span { color: var(--accent); }
   html { scroll-behavior: auto; }
   /* Must match .js .reveal specificity or the fade-out rule keeps winning here. */
   .js .reveal { opacity: 1; transform: none; }
-  .js .tl-item, .js .tl-dot { opacity: 1; transform: none; }
+  /* Covers reduced motion being switched on after load, when .anim is already set and
+     entries below the fold would otherwise stay hidden with no transition to reveal them. */
+  .timeline.anim .tl-item, .timeline.anim .tl-dot { opacity: 1; transform: none; }
 }
 
 @media print {
@@ -444,5 +455,5 @@ footer span { color: var(--accent); }
   /* These only reach their end state once scrolled into view — force them, or printing
      a page nobody scrolled through emits blank boxes and missing entries. */
   .glyph path { stroke-dashoffset: 0 !important; }
-  .js .tl-item, .js .tl-dot { opacity: 1 !important; transform: none !important; }
+  .timeline.anim .tl-item, .timeline.anim .tl-dot { opacity: 1 !important; transform: none !important; }
 }
