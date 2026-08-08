@@ -1,6 +1,8 @@
 # dev-arctik portfolio
 
-A static, hand-drawn portfolio. No build step, no backend, no dependencies — open `index.html` and it works.
+**Live:** https://dev-arctik.github.io/dev-arctik-portfolio/
+
+My personal portfolio — one page covering the AI agent work I do, the projects behind it, and how to reach me. It's a static site with no build step, no backend and no dependencies: open `index.html` and it works. Everything hand-drawn on the page is rendered at runtime by a small SVG sketch engine, not exported as images.
 
 The aesthetic is **hybrid**: hand-drawn chrome (frames, buttons, underlines, annotations) over clean, readable content (sans body text, mono for code). That split is deliberate — full handwritten body text hurts readability and reads as unserious to enterprise visitors.
 
@@ -51,7 +53,7 @@ The four work cards are Mediator Gabby (Better Parenting Plan), Hundi, Maya and 
 
 ### Still to do
 
-1. **`og:url`** — still `https://example.com`. Set it once you know the domain, and add a 1200×630 `assets/img/og.png`. Marked `SWAP`.
+1. **Share image** — `og:url` now points at the live GitHub Pages address, but `og:image` still reuses the avatar (`assets/img/me.jpg`). A purpose-made 1200×630 `assets/img/og.png` would preview far better in Slack, LinkedIn and iMessage.
 2. **Outcome numbers** — the `.result` chips currently carry authorship facts (commit counts, team size). Real product outcomes — mediators onboarded, sessions run — would hit harder if you can share them.
 3. **The hero photo** is the GitHub avatar, a cartoon rather than a real photo. `.polaroid .shot img` crops it hard right to cut off leftover lettering baked into the artwork — if you swap in a real photo, drop that `object-position` override.
 
