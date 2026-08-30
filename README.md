@@ -9,12 +9,16 @@ The aesthetic is **hybrid**: hand-drawn chrome (frames, buttons, underlines, ann
 ## Structure
 
 ```
-index.html              the whole page — hero, work, journey, toolkit, contact
+index.html              the whole page — hero, work, learning, journey, toolkit, contact
+404.html                error page — same look, sketch engine only, absolute asset paths
+robots.txt              points crawlers at the sitemap
+sitemap.xml             one entry; bump lastmod when the copy changes
 assets/
   css/style.css         all styling, organised in numbered sections
   js/sketch.js          the hand-drawn rendering engine
-  js/main.js            page wiring — reveal on scroll, hover redraw, nav scrollspy
-  img/                  your photo and og image go here
+  js/main.js            page wiring — reveal on scroll, hash correction, hover redraw, scrollspy
+  img/                  photo, work screenshots, favicon.svg — og image still to come
+docs/overview.md        the living reference: design system, architecture, backlog
 ```
 
 ## How the hand-drawn look works
@@ -45,11 +49,13 @@ To sketch a new element, add `data-sketch` and make sure any bare text inside is
 
 ## The content
 
-Copy is real, not placeholder. The timeline and toolkit come from the actual GitHub contribution history — commit counts in the `.result` chips are verifiable via the contributors API, so keep them accurate if you edit them. Each work card was written from that project's own `docs/` folder rather than its README.
+Copy is real, not placeholder. The timeline and toolkit come from the actual GitHub contribution history. The `.result` chips deliberately carry **durable** claims only — "in production", "sole author", "fits in 4 GB VRAM" — never commit counts or anything else that decays; two commit figures had already drifted into contradicting each other before they were removed. Nothing on the page should need scheduled maintenance to stay true. Each work card was written from that project's own `docs/` folder rather than its README.
 
 Deliberately left out of the public copy: personal figures from the Hundi tracker docs (real income and spending totals), and the client's Stripe pricing tiers and production server address from the Mediator Gabby deployment docs. Keep it that way if you extend these cards.
 
-The four work cards are Mediator Gabby (Better Parenting Plan), Hundi, Maya and `remotion-video-mcp`. Only the last is public, so it's the only card with a source link — the rest describe the work instead. `.cards` uses `auto-fit minmax(360px, 1fr)`, tuned so four cards land as a 2×2; if you add or remove cards, check that minimum still gives the column count you want.
+The four work cards are Mediator Gabby (Better Parenting Plan), Hundi, Maya and `remotion-video-mcp`. Only the last is public, so it's the only card with a source link — the rest describe the work instead. Gabby is the `.featured` card: it spans the full row and carries a real screenshot of the mediator comparison view, captured against seeded test data only.
+
+`.cards` uses `auto-fit minmax(300px, 1fr)` so the three non-featured cards land in one row. Column count is `floor((C + gap) / (min + gap))` against the wrap's **content** box — 1080px max-width less 48px padding, so 1032px, not 1080. Check that maths if you add or remove cards; `.learn-grid` uses a larger 340px minimum for the same reason, to land its four items 2×2.
 
 ### Still to do
 
