@@ -20,13 +20,46 @@
      shares fall back to a bare text card. -->
 <meta property="og:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg">
 
+<link rel="canonical" href="https://dev-arctik.github.io/dev-arctik-portfolio/">
+<meta name="theme-color" content="#f7f4ec">
+<!-- SVG favicon: drawn in the same ink as the rest of the page, see assets/img/favicon.svg -->
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<!-- Twitter/X reads its own tags before falling back to Open Graph; summary_large_image
+     is the card that actually shows a picture. -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Devansh Raj — AI agent engineer">
+<meta name="twitter:description" content="I build AI agent-enabled software, taking products from MVP to release-ready.">
+<meta name="twitter:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <!-- ?v= is a manual cache buster. There is no build step to hash filenames, and browsers
      cache CSS and JS independently, so a returning visitor can otherwise end up running
      a new stylesheet against an old script. Bump this whenever either file changes. -->
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=12">
+
+<!-- Structured data. Lets search engines and AI crawlers read the identity as facts
+     rather than inferring it from prose, and is what powers a knowledge-panel style
+     result for a personal name. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Devansh Raj",
+  "url": "https://dev-arctik.github.io/dev-arctik-portfolio/",
+  "image": "https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg",
+  "jobTitle": "AI agent engineer",
+  "worksFor": { "@type": "Organization", "name": "Gradscaler" },
+  "email": "mailto:devansh.arctikcircle@gmail.com",
+  "sameAs": [
+    "https://github.com/dev-arctik",
+    "https://www.linkedin.com/in/devanshraj"
+  ],
+  "knowsAbout": ["AI agents", "LangGraph", "Model Context Protocol", "FastAPI", "Python", "TypeScript", "Flutter"]
+}
+</script>
 </head>
 <body>
 
@@ -38,6 +71,7 @@
     <nav aria-label="Primary">
       <ul>
         <li><a href="#work" data-sketch="underline">work</a></li>
+        <li><a href="#learning" data-sketch="underline">learning</a></li>
         <li><a href="#journey" data-sketch="underline">journey</a></li>
         <li><a href="#toolkit" data-sketch="underline">toolkit</a></li>
         <li><a href="#contact" data-sketch="underline">contact</a></li>
@@ -66,7 +100,7 @@
       <div>
         <figure class="polaroid" data-sketch data-anim="tilt">
           <div class="shot">
-            <img src="assets/img/me.jpg" alt="Devansh Raj">
+            <img src="assets/img/me.jpg" width="576" height="720" alt="Devansh Raj">
           </div>
           <figcaption class="caption">building things that ship</figcaption>
         </figure>
@@ -82,12 +116,24 @@
     </div>
 
     <div class="cards" data-anim-group data-anim-step="100">
-      <article class="card" data-sketch data-anim="rise">
+      <!-- Featured: the lead project takes the full row so its screenshot has room. The
+           other three stay in the grid below, which turns "only one card has a picture"
+           into deliberate hierarchy rather than a gap. -->
+      <article class="card featured" data-sketch data-anim="rise">
         <span class="kicker">2025 — now · lead developer</span>
         <h3>Mediator Gabby</h3>
-        <p>Separating parents each talk things through alone with the agent, in their own private room. Once both are done it lines the answers up — agreed, partly, not yet — and hands that to their mediator for the real conversation.</p>
-        <p>Live for Better Parenting Plan. The first version ran the joint session too; mediators said that was a step too far, so I rebuilt it around them. Thirteen topics, two scoped rooms, LangGraph and FastAPI underneath.</p>
-        <span class="result">in production</span>
+        <div class="featured-grid">
+          <!-- shadow off: this frame sits inside the card's own frame, and two drop
+               shadows nested an inch apart read as a rendering fault, not as paper. -->
+          <div class="featured-shot" data-sketch data-shadow="off">
+            <img src="assets/img/gabby-comparison.jpg" width="1456" height="834" loading="lazy" decoding="async" alt="Gabby's mediator comparison view: a green panel listing what both parents agree on, above a yellow panel of points that still need discussion.">
+          </div>
+          <div>
+            <p>Separating parents each talk things through alone with the agent, in their own private room. Once both are done it lines the answers up — agreed, partly, not yet — and hands that to their mediator for the real conversation.</p>
+            <p>Live for Better Parenting Plan. The first version ran the joint session too; mediators said that was a step too far, so I rebuilt it around them. Thirteen topics, two scoped rooms, LangGraph and FastAPI underneath.</p>
+            <span class="result">in production</span>
+          </div>
+        </div>
       </article>
 
       <article class="card" data-sketch data-anim="rise">
@@ -95,7 +141,7 @@
         <h3>Hundi</h3>
         <p>Your salary lands, you confirm it, and it splits by percentage into buckets — savings and investments first, expenses get what's left. No bank linking, nothing logged behind your back.</p>
         <p>It's the Notion tracker I ran on myself for two years, turned into a real app. A hundi is a medieval Indian bill of exchange, and also a temple collection box — which is where the piggy banks come from.</p>
-        <span class="result">sole author</span>
+        <span class="result">sole author · in beta</span>
       </article>
 
       <article class="card" data-sketch data-anim="rise">
@@ -115,6 +161,84 @@
           <a href="https://github.com/dev-arctik/remotion-video-mcp">source</a>
         </div>
       </article>
+    </div>
+  </section>
+
+  <!-- ============================ LEARNING ============================ -->
+  <!-- Sits between work and journey on purpose: it explains how the work in the section
+       above keeps happening, and sets up the timeline below, which is the same habit
+       told chronologically. -->
+  <section class="wrap reveal" id="learning">
+    <div class="section-head" data-anim-group data-anim-step="90">
+      <h2 data-anim="lift">I keep learning</h2>
+      <p data-anim="lift">Every step in the timeline below started as something I taught myself on the side, and the working out is public. These are the repos where I actually learn things — commits from the days I hadn't understood it yet, not a tidy write-up after the fact. When a colleague picks up the same tool, this is what I point them at.</p>
+    </div>
+
+    <div class="learn-grid" data-anim-group data-anim-step="70">
+      <div class="learn-item" data-anim="lift">
+        <!-- Two states and a cycle — the thing LangGraph does that a plain chain doesn't. -->
+        <svg class="learn-glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 14 33 C 25 31, 36 31, 46 33 C 47 40, 47 48, 46 55 C 36 57, 25 57, 14 55 C 13 48, 13 40, 14 33 Z"/>
+          <path d="M 74 33 C 85 31, 96 31, 106 33 C 107 40, 107 48, 106 55 C 96 57, 85 57, 74 55 C 73 48, 73 40, 74 33 Z"/>
+          <path d="M 49 43 L 70 43"/>
+          <path d="M 65 38 L 71 43 L 65 48"/>
+          <path d="M 74 64 C 62 74, 42 74, 32 65"/>
+          <path d="M 38 65 L 31 64 L 34 71"/>
+        </svg>
+        <div class="learn-body">
+        <a href="https://github.com/dev-arctik/LangGraph_Learning" data-sketch="underline">LangGraph_Learning</a>
+        <p>Agent graphs, from the first stateful node to the patterns that ended up in production.</p>
+        </div>
+      </div>
+      <div class="learn-item" data-anim="lift">
+        <!-- Three interlocking links. Literal, and unmistakable at a glance. -->
+        <svg class="learn-glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 13 48 a 17 11 0 1 0 34 0 a 17 11 0 1 0 -34 0"/>
+          <path d="M 43 48 a 17 11 0 1 0 34 0 a 17 11 0 1 0 -34 0"/>
+          <path d="M 73 48 a 17 11 0 1 0 34 0 a 17 11 0 1 0 -34 0"/>
+        </svg>
+        <div class="learn-body">
+        <a href="https://github.com/dev-arctik/LangChain-Learning" data-sketch="underline">LangChain-Learning</a>
+        <p>Where the agent work started, a month before LangGraph and two before the job title.</p>
+        </div>
+      </div>
+      <div class="learn-item" data-anim="lift">
+        <!-- A flask: something being tried out rather than already relied on. -->
+        <svg class="learn-glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 50 16 C 50 28, 50 36, 50 41 L 30 73 C 27 79, 32 84, 38 84 L 82 84 C 88 84, 93 79, 90 73 L 70 41 C 70 36, 70 28, 70 16"/>
+          <path d="M 44 16 C 54 14, 66 14, 76 16"/>
+          <path d="M 38 68 C 50 65, 70 65, 82 68"/>
+          <path d="M 52 74 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0"/>
+          <path d="M 68 78 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0"/>
+        </svg>
+        <div class="learn-body">
+        <a href="https://github.com/dev-arctik/Agno-Learning" data-sketch="underline">Agno-Learning</a>
+        <p>The current one — working through Agno to find out what it does better than what I already use.</p>
+        </div>
+      </div>
+      <div class="learn-item" data-anim="lift">
+        <!-- Layered net. Edges first so the nodes sit over them. -->
+        <svg class="learn-glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+          <path d="M 27 28 L 55 34"/>
+          <path d="M 27 28 L 55 62"/>
+          <path d="M 27 48 L 55 34"/>
+          <path d="M 27 48 L 55 62"/>
+          <path d="M 27 68 L 55 34"/>
+          <path d="M 27 68 L 55 62"/>
+          <path d="M 65 34 L 93 48"/>
+          <path d="M 65 62 L 93 48"/>
+          <path d="M 17 28 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+          <path d="M 17 48 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+          <path d="M 17 68 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+          <path d="M 55 34 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+          <path d="M 55 62 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+          <path d="M 93 48 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0"/>
+        </svg>
+        <div class="learn-body">
+        <a href="https://github.com/dev-arctik/neural_network_learning" data-sketch="underline">neural_network_learning</a>
+        <p>Notebooks from going back to the maths underneath all of it, rather than staying at the library layer.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -252,7 +376,6 @@
       <div class="tags">
         <span class="tag" data-sketch data-anim="pop">Python</span>
         <span class="tag" data-sketch data-anim="pop">TypeScript</span>
-        <span class="tag" data-sketch data-anim="pop">JavaScript</span>
         <span class="tag" data-sketch data-anim="pop">Dart</span>
       </div>
     </div>
@@ -261,10 +384,8 @@
       <h4 data-anim="lift">ai &amp; agents</h4>
       <div class="tags">
         <span class="tag" data-sketch data-anim="pop">LangGraph</span>
-        <span class="tag" data-sketch data-anim="pop">LangChain</span>
         <span class="tag" data-sketch data-anim="pop">MCP</span>
         <span class="tag" data-sketch data-anim="pop">Claude API</span>
-        <span class="tag" data-sketch data-anim="pop">OpenAI</span>
         <span class="tag" data-sketch data-anim="pop">Ollama</span>
       </div>
     </div>
@@ -273,10 +394,8 @@
       <h4 data-anim="lift">backend &amp; data</h4>
       <div class="tags">
         <span class="tag" data-sketch data-anim="pop">FastAPI</span>
-        <span class="tag" data-sketch data-anim="pop">Node.js</span>
         <span class="tag" data-sketch data-anim="pop">MongoDB</span>
         <span class="tag" data-sketch data-anim="pop">Redis</span>
-        <span class="tag" data-sketch data-anim="pop">SQLite</span>
         <span class="tag" data-sketch data-anim="pop">Stripe</span>
       </div>
     </div>
@@ -286,8 +405,6 @@
       <div class="tags">
         <span class="tag" data-sketch data-anim="pop">React</span>
         <span class="tag" data-sketch data-anim="pop">Next.js</span>
-        <span class="tag" data-sketch data-anim="pop">React Native</span>
-        <span class="tag" data-sketch data-anim="pop">Electron</span>
         <span class="tag" data-sketch data-anim="pop">Flutter</span>
       </div>
     </div>
@@ -297,7 +414,6 @@
       <div class="tags">
         <span class="tag" data-sketch data-anim="pop">Docker</span>
         <span class="tag" data-sketch data-anim="pop">AWS</span>
-        <span class="tag" data-sketch data-anim="pop">DigitalOcean</span>
         <span class="tag" data-sketch data-anim="pop">GitHub Actions</span>
       </div>
     </div>
@@ -332,7 +448,7 @@
   <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
 </footer>
 
-<script src="assets/js/sketch.js?v=4"></script>
-<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/sketch.js?v=12"></script>
+<script src="assets/js/main.js?v=12"></script>
 </body>
 </html>

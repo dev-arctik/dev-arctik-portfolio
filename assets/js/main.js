@@ -89,6 +89,50 @@
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
 
     [...animGroups, ...animSolo].forEach(el => revealIo.observe(el));
+
+    /* Safety net. The observer covers every normal case, but a hash jump landing
+       mid-reflow, or a scroll position restored on reload, can leave something on
+       screen that never registered an intersection — and the failure mode here is a
+       blank page, not an unstyled one. Once fonts settle, release anything already
+       visible that is somehow still hidden. Content below the fold is left alone so
+       the reveal still happens on the way down. */
+    const releaseVisible = () => {
+      [...animGroups, ...animSolo].forEach(el => {
+        if (el.classList.contains('in-view')) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) release(el);
+      });
+    };
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => setTimeout(releaseVisible, 400));
+    }
+  }
+
+  /* Deep links land in the wrong place without this. The browser resolves
+     location.hash against fallback font metrics, then the webfonts swap, every
+     paragraph re-wraps, and the target slides out from under the scroll position —
+     roughly 1500px down a 4700px page, which is a different section entirely.
+     Re-apply the hash once metrics are final. Instant, not smooth: this is a
+     correction to a jump that already happened, not a navigation. */
+  if (location.hash && document.fonts && document.fonts.ready) {
+    let target = null;
+    try { target = document.querySelector(location.hash); } catch (e) { /* not a valid selector */ }
+    if (target) {
+      /* Both signals are needed. fonts.ready alone resolves on the next microtask when
+         the faces are already cached — long before images and final layout — so the
+         correction lands on metrics that are still about to change. Waiting for load
+         too, then one frame, means the scroll happens against the settled page. */
+      const loaded = document.readyState === 'complete'
+        ? Promise.resolve()
+        : new Promise(res => window.addEventListener('load', res, { once: true }));
+
+      /* 'instant', not 'auto'. 'auto' defers to the computed scroll-behavior, which is
+         smooth on <html> — so the correction would glide slowly across the page instead
+         of putting the reader where they asked to be. */
+      Promise.all([document.fonts.ready, loaded]).then(() => {
+        requestAnimationFrame(() => target.scrollIntoView({ behavior: 'instant' }));
+      });
+    }
   }
 
   /* The spine draws downward in step with the scroll, so the line reaches "now" exactly
