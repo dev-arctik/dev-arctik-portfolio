@@ -1,0 +1,8 @@
+# robots.txt
+# Everything here is meant to be found — this file exists mainly to point crawlers
+# at the sitemap rather than to restrict anything.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://dev-arctik.github.io/dev-arctik-portfolio/sitemap.xml
