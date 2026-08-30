@@ -1,0 +1,86 @@
+<!--
+  404.html
+  Served by GitHub Pages for any path that doesn't exist. Shares the site's stylesheet and
+  sketch engine so a wrong turn still looks like the same place.
+  Asset paths are absolute on purpose — Pages serves this file for arbitrary depths
+  (/dev-arctik-portfolio/foo/bar), where relative paths would resolve against the request.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Devansh Raj</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f7f4ec">
+<link rel="icon" href="/dev-arctik-portfolio/assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/dev-arctik-portfolio/assets/css/style.css?v=12">
+
+<style>
+  /* Local to this page only. Paper, grid, ink, buttons and footer all come from the
+     shared stylesheet, so this page inherits the site's look rather than restating it. */
+  .oops { text-align: center; padding: 60px 0 90px; }
+  .oops h1 { font-size: clamp(4.5rem, 18vw, 9rem); line-height: 0.9; margin: 6px 0 4px; }
+  .oops p { max-width: 46ch; margin: 0 auto 26px; }
+  .oops .glyph { margin: 6px auto 22px; display: block; }
+  .oops .btns { justify-content: center; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="/dev-arctik-portfolio/">dev<span>-</span>arctik</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="/dev-arctik-portfolio/#work" data-sketch="underline">work</a></li>
+        <li><a href="/dev-arctik-portfolio/#learning" data-sketch="underline">learning</a></li>
+        <li><a href="/dev-arctik-portfolio/#journey" data-sketch="underline">journey</a></li>
+        <li><a href="/dev-arctik-portfolio/#toolkit" data-sketch="underline">toolkit</a></li>
+        <li><a href="/dev-arctik-portfolio/#contact" data-sketch="underline">contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap oops">
+  <span class="eyebrow">well — this is awkward</span>
+  <h1>404</h1>
+
+  <!-- A page torn out of the notebook, drawn in the same hand as the timeline glyphs.
+       No stroke-dash animation here: that lives in the .anim block, which this page
+       never gets, so the paths render fully drawn. -->
+  <svg class="glyph" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+    <path d="M 28 9 C 52 7, 76 7, 92 9 C 93 28, 93 46, 92 62"/>
+    <path d="M 28 9 C 27 28, 27 46, 28 62"/>
+    <path d="M 28 62 L 36 71 L 44 60 L 52 71 L 60 60 L 68 71 L 76 60 L 84 71 L 92 62"/>
+    <path d="M 40 27 C 52 26, 66 26, 79 27"/>
+    <path d="M 40 40 C 50 39, 60 39, 71 40"/>
+  </svg>
+
+  <p>There's nothing at this address. It was either renamed, or the link that sent you here was wrong. Everything I've got is one page back.</p>
+
+  <div class="btns">
+    <a class="btn primary" data-sketch data-fill="var(--accent-deep)" data-ink="var(--ink)" href="/dev-arctik-portfolio/"><span>back to the start</span></a>
+    <a class="btn" data-sketch href="/dev-arctik-portfolio/#contact"><span>tell me it's broken</span></a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
+</footer>
+
+<!-- sketch.js only. main.js is deliberately left out: it hides content until scroll, and
+     an error page must never be able to render blank. The CSS fallback border means this
+     still looks right if the script fails outright. -->
+<script src="/dev-arctik-portfolio/assets/js/sketch.js?v=12"></script>
+<script>Sketch.init();</script>
+
+</body>
+</html>

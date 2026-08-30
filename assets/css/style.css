@@ -153,7 +153,11 @@ header {
 }
 .bar {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 20px; padding: 16px 0 20px; flex-wrap: wrap;
+  gap: 20px; flex-wrap: wrap;
+  /* Long-hand, not `padding: 16px 0 20px`. This element is `.wrap .bar`, and the
+     shorthand zeroed the 24px side padding .wrap sets — so under 1080px the logo sat
+     flush to the screen edge while every heading below it started 24px in. */
+  padding-top: 16px; padding-bottom: 20px;
 }
 .logo {
   font-family: var(--font-display);
@@ -256,14 +260,18 @@ nav a.current { color: var(--ink); }
 /* ============================================================
    7. Cards / work
    ============================================================ */
-/* 360px min resolves to two columns at the 1080px wrap, so four cards sit as a 2x2
-   instead of leaving one stranded on a second row — revisit it if the card count
-   changes. align-items: start then lets each card size to its own copy; stretching
-   them to a shared row height leaves dead space under the shorter ones, which reads
-   as an unfinished card rather than a deliberately ragged pinboard. */
+/* The lead project takes the full row as .featured, so the remaining three need to sit
+   in one row rather than 2 + 1 with one stranded. Column count is floor((C + gap) /
+   (min + gap)) against the wrap's *content* box — 1080px max-width less 48px padding,
+   so 1032px, not 1080. Three columns therefore need a min of 320px or less; 300px is
+   used instead of that exact fit to leave room for rounding and scrollbar width.
+   Revisit it if the card count changes. align-items: start then lets each card size to
+   its own copy; stretching them to a shared row height leaves dead space under the
+   shorter ones, which reads as an unfinished card rather than a deliberately ragged
+   pinboard. */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: start;
   gap: 36px;
 }
@@ -280,7 +288,7 @@ nav a.current { color: var(--ink); }
 .card h3 { margin-bottom: 0.3em; }
 .card p { font-size: 0.98rem; }
 .kicker {
-  font-family: var(--font-note); font-size: 1.15rem;
+  font-family: var(--font-note); font-size: 1.25rem;   /* Caveat needs more size than a sans to stay legible */
   color: var(--accent-2); letter-spacing: 0.01em;
 }
 .card-links { display: flex; gap: 16px; margin-top: 14px; font-size: 0.94rem; }
@@ -296,6 +304,91 @@ nav a.current { color: var(--ink); }
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: inline-block; padding: 2px 8px; margin-top: 4px;
+}
+
+/* --- Featured card -----------------------------------------------------------
+   The lead project spans the whole row so its screenshot has somewhere to live.
+   Rotation is nearly flat here: the same 0.7deg that reads as a pinned card at
+   360px wide reads as a crooked page at full width. */
+.card.featured { grid-column: 1 / -1; transform: rotate(-0.25deg); }
+.card.featured:hover { transform: rotate(0deg) translateY(-5px); }
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 30px;
+  align-items: center;
+  margin-top: 18px;
+}
+.featured-shot {
+  background: var(--paper-card);
+  padding: 10px;
+  transform: rotate(0.6deg);   /* counter to the card, so the print looks laid on top */
+}
+/* The capture's own ratio, declared so the box reaches its final height before the
+   JPEG arrives. sketch.js measures on load and redraws via ResizeObserver, but a
+   late reflow would still flash a frame at the wrong size. */
+.featured-shot img {
+  display: block; width: 100%;
+  /* height:auto is required, not optional. The width/height attributes on the <img>
+     map to CSS presentation hints, so without this the 834px height attribute wins
+     and the picture renders at full pixel height instead of scaling to the column. */
+  height: auto;
+  aspect-ratio: 1456 / 834;
+  object-fit: cover;
+}
+
+/* --- Learning repos ----------------------------------------------------------
+   Deliberately lighter than .card: these are pointers to working-out, not finished
+   work, and giving them card frames would make them compete with Selected work.
+   Two columns at desktop, one below — three would shrink the descriptions to
+   fragments. */
+.learn-grid {
+  display: grid;
+  /* 340px resolves to two columns against the 1032px content box, so four repos sit
+     2x2 rather than 3 + 1 stranded. Same arithmetic as .cards — floor((C + gap) /
+     (min + gap)) — but a different answer because the item count differs. */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 26px 40px;
+}
+/* Glyph left of the copy, not above it. Eye-tracking puts a vertical scan down the
+   left edge of a content block, so that column is where a silhouette actually gets
+   seen — four distinct shapes (cycle, chain, flask, layered net) let someone tell the
+   four repos apart without reading a word. */
+.learn-item {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.learn-glyph { width: 62px; height: 50px; overflow: visible; }
+/* Stroke width is in viewBox units, and this renders at roughly half the timeline
+   glyphs' scale — so it has to be set proportionally heavier to land at the same
+   visual weight on screen. */
+.learn-glyph path {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 4.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.learn-item a {
+  font-family: var(--font-mono); font-size: 0.92rem;
+  color: var(--accent-deep); text-decoration: none;
+  /* Wraps rather than overflowing: these repo names are long and unbreakable. */
+  overflow-wrap: anywhere;
+  /* Room for the squiggle to sit below the text rather than through it. */
+  display: inline-block;
+  padding-bottom: 7px;
+}
+/* These names are mono and full of underscores, which render on the baseline exactly
+   where the default squiggle lands — the two cross and the name stops being readable.
+   The nav doesn't hit this because it's sans with no underscores. Push the overlay
+   clear of the descender line; the padding above reserves the space it moves into. */
+.learn-item a[data-sketch="underline"] > svg.sketch { bottom: -7px; }
+.learn-item p {
+  font-size: 0.94rem; color: var(--ink-soft);
+  margin-top: 7px; max-width: 46ch;
 }
 
 /* ============================================================
@@ -460,6 +553,15 @@ footer span { color: var(--accent); }
 }
 .anim .polaroid.in-view .shot img { opacity: 1; filter: none; }
 
+/* Same develop-in treatment for the featured screenshot, so the two photographic
+   elements on the page behave alike rather than each having their own idea. */
+.anim .featured-shot img {
+  opacity: 0.12;
+  filter: saturate(0.15) contrast(0.75) brightness(1.2);
+  transition: opacity 0.9s ease-out 0.5s, filter 1.2s ease-out 0.5s;
+}
+.anim .card.featured.in-view .featured-shot img { opacity: 1; filter: none; }
+
 /* The result chip is a marker stroke, so it swipes rather than fades — and it waits
    for its card to land first. */
 .anim .card .result { background-size: 0% 100%; transition: background-size 0.6s cubic-bezier(0.4, 0.8, 0.3, 1) 0.4s; }
@@ -470,6 +572,7 @@ footer span { color: var(--accent); }
    ============================================================ */
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .featured-grid { grid-template-columns: 1fr; gap: 24px; }
   .polaroid { margin-left: 0; }
   section { padding: 56px 0; }
 }
@@ -481,10 +584,12 @@ footer span { color: var(--accent); }
 }
 @media (max-width: 560px) {
   body { font-size: 16.5px; }
-  /* Nav drops to its own centred row — four links beside the logo is too cramped here. */
+  /* No nav links on phones. Five of them sit at roughly 14px with 20px gaps — well under
+     a comfortable tap target — and they duplicate the hero's two CTAs, which already
+     cover the destinations anyone actually wants. The logo stays as the way back to the
+     top; everything else is a scroll away on a single page. */
+  nav { display: none; }
   .bar { padding-bottom: 12px; gap: 10px; }
-  nav { width: 100%; }
-  nav ul { gap: 20px; justify-content: center; }
   .timeline { padding-left: 40px; }
   .tl-dot { left: -40px; }
   .spine { left: 4px; }
@@ -506,6 +611,7 @@ footer span { color: var(--accent); }
   }
   .anim .card .result { background-size: 100% 100%; }
   .anim .polaroid .shot img { opacity: 1; filter: none; }
+  .anim .featured-shot img { opacity: 1; filter: none; }
 }
 
 @media print {
@@ -522,4 +628,5 @@ footer span { color: var(--accent); }
   }
   .anim .card .result { background-size: 100% 100% !important; }
   .anim .polaroid .shot img { opacity: 1 !important; filter: none !important; }
+  .anim .featured-shot img { opacity: 1 !important; filter: none !important; }
 }

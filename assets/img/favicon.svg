@@ -1,0 +1,17 @@
+<!--
+  assets/img/favicon.svg
+  Browser-tab mark: a rough ink "d" on paper with the site's marker swipe underneath.
+  Drawn rather than generated, matching sketch.js's aesthetic. Kept to three thick strokes
+  so it still reads at 16px, where any finer detail would turn to mud.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="dev-arctik">
+  <rect width="48" height="48" rx="9" fill="#f7f4ec"/>
+  <g fill="none" stroke="#1c1b18" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ascender, with a slight lean so it reads as handwritten -->
+    <path d="M33 8 C34 17, 34 26, 33 34"/>
+    <!-- bowl, opened counter-clockwise from the stem -->
+    <path d="M33 22 C30 17, 22 16, 18 21 C13 26, 15 34, 21 35 C27 36, 32 32, 33 28"/>
+  </g>
+  <!-- marker swipe: the same highlight gesture used behind the result strips -->
+  <path d="M10 42 C20 40, 30 40, 39 42" fill="none" stroke="#e2552a" stroke-width="3.6" stroke-linecap="round"/>
+</svg>
