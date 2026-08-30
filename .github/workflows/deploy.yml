@@ -1,0 +1,45 @@
+#  .github/workflows/deploy.yml
+#  Publishes the site to GitHub Pages on every push to main.
+#  There is no build step — the repo root is the site, so it is uploaded as-is.
+#  Replaces the legacy branch-based Pages builder, which gave no logs and no place to add checks.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-deploy from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+# Least privilege: the job only reads the repo and mints a Pages deploy token.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. Queue instead of cancelling, so the last push always wins.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
