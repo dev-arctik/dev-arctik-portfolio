@@ -1,8 +1,8 @@
 <!--
   index.html
   The portfolio itself — a single static page, no build step and no backend.
-  Sections: hero, work, journey (progress over time), toolkit, contact.
-  Copy and photo are real. Live at dev-arctik.github.io/dev-arctik-portfolio. One SWAP remains: an og:image.
+  Sections: hero, work, learning, journey (progress over time), toolkit, contact.
+  Copy and photo are real. Live at dev-arctik.github.io/dev-arctik-portfolio.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +16,14 @@
 <meta property="og:description" content="I build AI agent-enabled software, taking products from MVP to release-ready.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dev-arctik.github.io/dev-arctik-portfolio/">
-<!-- SWAP: a 1200x630 assets/img/og.png would give link previews a picture. Without it
-     shares fall back to a bare text card. -->
-<meta property="og:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg">
+<!-- Drawn by the same engine as the page, not approximated in an image editor — the
+     source is tools/og-card.html, screenshotted at 1200x630. Dimensions are declared so
+     scrapers can reserve the right box before the image arrives; several will skip an
+     image whose size they can't determine cheaply. -->
+<meta property="og:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Devansh Raj — I build AI agent products end to end. LangGraph, FastAPI, MCP. Vadodara, India.">
 
 <link rel="canonical" href="https://dev-arctik.github.io/dev-arctik-portfolio/">
 <meta name="theme-color" content="#f7f4ec">
@@ -30,7 +35,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Devansh Raj — AI agent engineer">
 <meta name="twitter:description" content="I build AI agent-enabled software, taking products from MVP to release-ready.">
-<meta name="twitter:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg">
+<meta name="twitter:image" content="https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/og.jpg">
+<meta name="twitter:image:alt" content="Devansh Raj — I build AI agent products end to end. LangGraph, FastAPI, MCP. Vadodara, India.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +44,7 @@
 <!-- ?v= is a manual cache buster. There is no build step to hash filenames, and browsers
      cache CSS and JS independently, so a returning visitor can otherwise end up running
      a new stylesheet against an old script. Bump this whenever either file changes. -->
-<link rel="stylesheet" href="assets/css/style.css?v=12">
+<link rel="stylesheet" href="assets/css/style.css?v=14">
 
 <!-- Structured data. Lets search engines and AI crawlers read the identity as facts
      rather than inferring it from prose, and is what powers a knowledge-panel style
@@ -52,6 +58,12 @@
   "image": "https://dev-arctik.github.io/dev-arctik-portfolio/assets/img/me.jpg",
   "jobTitle": "AI agent engineer",
   "worksFor": { "@type": "Organization", "name": "Gradscaler" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Vadodara",
+    "addressRegion": "Gujarat",
+    "addressCountry": "IN"
+  },
   "email": "mailto:devansh.arctikcircle@gmail.com",
   "sameAs": [
     "https://github.com/dev-arctik",
@@ -424,6 +436,10 @@
     <div class="section-head" data-anim-group data-anim-step="90">
       <h2 data-anim="lift">Get in touch</h2>
       <p data-anim="lift">Have something that needs building and only a rough idea of the shape? That conversation is the part I like most. Tell me what the problem is and I'll tell you honestly whether I'm the right person for it.</p>
+      <!-- Where and when, in body font rather than a fourth contact card: the grid resolves
+           to three columns against the 1032px content box, so a fourth would strand one on
+           its own row. A client's first question after "can you build it" is the timezone. -->
+      <p data-anim="lift">Based in Vadodara, India — UTC+5:30.</p>
     </div>
 
     <div class="contact-grid" data-anim-group data-anim-step="90">
@@ -448,7 +464,7 @@
   <div class="wrap">drawn, not generated · <span>dev-arctik</span></div>
 </footer>
 
-<script src="assets/js/sketch.js?v=12"></script>
-<script src="assets/js/main.js?v=12"></script>
+<script src="assets/js/sketch.js?v=14"></script>
+<script src="assets/js/main.js?v=14"></script>
 </body>
 </html>
