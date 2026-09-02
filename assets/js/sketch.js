@@ -125,6 +125,15 @@ const Sketch = (() => {
     return Number(el.dataset.seed) + Number(el.dataset.salt || 0);
   }
 
+  // The host's own surface colour, or null when it has none to repaint (fully
+  // transparent hosts want the paper showing through, shadow and all).
+  function opaqueBackground(el) {
+    const bg = getComputedStyle(el).backgroundColor;
+    if (!bg || bg === 'transparent') return null;
+    const alpha = bg.startsWith('rgba(') ? Number(bg.split(',')[3]) : 1;
+    return alpha === 0 ? null : bg;
+  }
+
   /* ---------------- variants ---------------- */
 
   function drawBox(el, r) {
@@ -146,10 +155,18 @@ const Sketch = (() => {
       ));
     }
 
-    if (el.dataset.fill) {
+    /* The surface has to be repainted inside the SVG, above the shadow. The overlay is a
+       child of the host, so it stacks above the host's own CSS background — and the
+       shadow, offset by only `off` px, therefore covers 98% of the face it was meant to
+       sit behind, washing every card 22% toward ink. Painting the surface back over it
+       leaves just the offset sliver showing, which is the shadow the code above intends.
+       Falls back to the host's computed background so the CSS stays the single source of
+       truth for colour, and so the no-JS fallback still paints the same surface. */
+    const fill = el.dataset.fill || opaqueBackground(el);
+    if (fill) {
       svg.appendChild(path(
         roughRectClosed(BLEED, BLEED, r.width, r.height, seeded(seed + 31), amp),
-        { fill: el.dataset.fill }
+        { fill: fill }
       ));
     }
 

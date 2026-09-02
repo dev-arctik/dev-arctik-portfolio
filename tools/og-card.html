@@ -1,0 +1,99 @@
+<!--
+  tools/og-card.html
+  Source for assets/img/og.jpg, the 1200x630 link-preview card. Not part of the site —
+  it reuses the real style.css and sketch.js so the card is drawn by the same engine as
+  the page, rather than being an approximation that drifts as the palette changes.
+  To regenerate: serve the repo, open this at exactly 1200x630, screenshot it, and save
+  the result as assets/img/og.jpg (JPEG — the photo makes PNG about twice the size).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og card — 1200x630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  /* Fixed canvas: the screenshot is taken at exactly these dimensions, so nothing here
+     is responsive on purpose — a share card has one size and one size only. */
+  html, body { width: 1200px; height: 630px; overflow: hidden; margin: 0; }
+  /* The page grain is a fixed overlay at z-index 9999. Harmless on the site, but on a
+     630px canvas it sits over the whole card and muddies it in a small preview. */
+  body::after { display: none; }
+  /* The notebook ruling goes too. It reads as texture at full size and as noise in a
+     feed-sized preview — and being 1px lines across the whole canvas, it was tripling
+     the PNG's weight for detail nobody sees at share size. */
+  body { background-image: none; }
+
+  .og {
+    width: 1200px; height: 630px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 64px;
+    align-items: center;
+    padding: 0 78px;
+    box-sizing: border-box;
+  }
+  .og-logo {
+    position: absolute; top: 46px; left: 78px;
+    font-family: var(--font-display); font-size: 1.5rem; color: var(--ink);
+  }
+  .og-logo span { color: var(--accent); }
+
+  .og-eyebrow {
+    font-family: var(--font-note); font-size: 1.9rem; color: var(--accent);
+    display: inline-block; transform: rotate(-2deg); margin-bottom: 4px;
+  }
+  /* Set here rather than leaning on the site's clamp(): that scales with viewport width
+     and this canvas is fixed, so an explicit size is the honest way to state the intent. */
+  .og h1 { font-size: 5.1rem; margin: 0 0 14px; letter-spacing: -0.015em; }
+  .og-role {
+    font-family: var(--font-body); font-size: 1.6rem; color: var(--ink-soft);
+    margin: 0 0 26px; line-height: 1.4;
+  }
+  .og-stack {
+    font-family: var(--font-mono); font-size: 1.02rem; color: var(--ink);
+    display: inline-block; padding: 4px 12px;
+    background-image: linear-gradient(var(--highlight), var(--highlight));
+  }
+  .og-where {
+    font-family: var(--font-note); font-size: 1.5rem; color: var(--accent-2);
+    margin-top: 22px;
+  }
+  /* Bigger than the site's 270px cap — at preview size the photo is the only thing that
+     survives being scaled down in a feed, so it earns the extra width. */
+  .og .polaroid { max-width: 340px; transform: rotate(2.5deg); margin: 0; }
+  .og .polaroid .caption { font-size: 1.5rem; }
+</style>
+</head>
+<body>
+
+<div class="og">
+  <div class="og-logo">dev<span>-</span>arctik</div>
+
+  <div>
+    <span class="og-eyebrow">hey — I'm</span>
+    <h1>Devansh Raj</h1>
+    <p class="og-role">I build AI agent products end to end — from the first client conversation to what ships.</p>
+    <span class="og-stack">LangGraph · FastAPI · MCP</span>
+    <div class="og-where">Vadodara, India</div>
+  </div>
+
+  <figure class="polaroid" data-sketch>
+    <div class="shot">
+      <img src="../assets/img/me.jpg" width="576" height="720" alt="">
+    </div>
+    <figcaption class="caption">building things that ship</figcaption>
+  </figure>
+</div>
+
+<script src="../assets/js/sketch.js"></script>
+<script>
+  /* main.js is deliberately not loaded: it hides everything behind scroll reveals, and
+     nothing scrolls a screenshot. Draw the ink and stop. */
+  document.fonts.ready.then(() => Sketch.init());
+</script>
+</body>
+</html>
